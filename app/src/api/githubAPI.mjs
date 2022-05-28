@@ -1,4 +1,4 @@
-import { getMinutesDifference } from "./utils.mjs";
+import { getMinutesDifference } from "../utils.mjs";
 import axios from "axios";
 
 const GRAPHQL_ENDPOINT_URL = "https://api.github.com/graphql";

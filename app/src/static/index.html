@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <title>nFactorial Live</title>
+</head>
+
+<body>
+  <div class="container">
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">Main</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="auth.html">Auth</a>
+      </li>
+    </ul>
+    <div>
+      <button id="login">Login</button>
+      <button id="register">Register</button>
+      <button id="get-user">Get User</button>
+      <button id="logout">Logout</button>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+    crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('#register').click(function () {
+        $.ajax({
+          type: "POST",
+          url: "/auth/register",
+          data: {
+            fullname: "Aidar Nugmanoff",
+            username: "nugmanoff",
+            password: "Knopka1!"
+          },
+          success: function (data) {
+            localStorage.token = data.token;
+            alert('Got a token from the server! Token: ' + data.token);
+          },
+          error: function () {
+            alert("Login Failed");
+          }
+        });
+      });
+      $('#login').click(function () {
+        $.ajax({
+          type: "POST",
+          url: "/auth/login",
+          data: {
+            username: "nugmanoff",
+            password: "Knopka1!"
+          },
+          success: function (data) {
+            localStorage.token = data.token;
+            alert('Got a token from the server! Token: ' + data.token);
+          },
+          error: function () {
+            alert("Login Failed");
+          }
+        });
+      });
+      $('#get-user').click(function () {
+        $.ajax({
+          type: 'GET',
+          url: '/api/user',
+          beforeSend: function (xhr) {
+            if (localStorage.token) {
+              xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.token);
+            }
+          },
+          success: function (data) {
+            alert("Hello " + data);
+          },
+          error: function () {
+            alert("Sorry, you are not logged in.");
+          }
+        });
+      });
+      $('#logout').click(function () {
+        localStorage.clear();
+      });
+    });
+  </script>
+</body>
+
+</html>
