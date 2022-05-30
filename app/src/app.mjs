@@ -7,6 +7,8 @@ import isAuth from './middleware/isAuth.mjs';
 import unauthorizedHandler from './middleware/unauthorizedHandler.mjs';
 import { register, login } from './routes/auth.mjs';
 import { getUser } from './routes/user.mjs';
+import { createAssignment, deleteAssignment } from './routes/homework.mjs';
+import isMentor from './middleware/isMentor.mjs';
 
 const app = express()
 
@@ -26,5 +28,7 @@ app.use('/', express.static(__dirname + '/static'));
 app.post('/auth/register', register);
 app.post('/auth/login', login);
 app.get('/api/user', getUser);
+app.post('/api/hw/assignment', isMentor, createAssignment);
+app.delete('/api/hw/assignment/:id', isMentor, deleteAssignment);
 
 export default app;

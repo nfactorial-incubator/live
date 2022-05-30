@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-String
+
 const userSchema = new mongoose.Schema({
   fullname: { type: String, default: null, required: true },
   username: { type: String, unique: true, required: true },

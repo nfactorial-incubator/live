@@ -1,6 +1,6 @@
 export default (req, res, next) => {
     if (req.auth.role !== "mentor") {
-        return res.status(401).end('You have no access');
+        return res.status(401).end('You are not mentor');
     } else {
         return next()
     }
