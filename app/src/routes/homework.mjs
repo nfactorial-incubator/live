@@ -9,7 +9,6 @@ const createAssignment = async (req, res) => {
         }
 
         const mentorId = req.auth.id;
-        console.log("req.auth", req.auth);
 
         const assignment = await Assignment.create({
             title,
@@ -35,4 +34,25 @@ const deleteAssignment = async (req, res) => {
     }
 };
 
-export { createAssignment, deleteAssignment };
+const getAllAssignments = async (req, res) => {
+    try {
+        const assignments = await Assignment.find({});
+        return res.status(200).json(assignments);
+    } catch (err) {
+        console.log(err);
+        return res.status(502).json({ "message": "some shit on our side" })
+    }
+};
+
+const getAssignment = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const assignment = await Assignment.findOne({ _id: id })
+        return res.status(200).json(assignment);
+    } catch (err) {
+        console.log(err);
+        return res.status(502).json({ "message": "some shit on our side" })
+    }
+};
+
+export { createAssignment, deleteAssignment, getAllAssignments, getAssignment };
