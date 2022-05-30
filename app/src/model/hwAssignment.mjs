@@ -15,4 +15,4 @@ const hwAssignmentSchema = new mongoose.Schema({
   }
 });
 
-export default mongoose.model("hwSubmission", hwAssignmentSchema);
+export default mongoose.model("hwAssignment", hwAssignmentSchema);

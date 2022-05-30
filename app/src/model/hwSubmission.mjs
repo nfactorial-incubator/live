@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
+import Comment from "./comment.mjs";
 
 const hwSubmissionSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    default: null
+  },
   description: {
     type: String,
     default: null
@@ -16,6 +21,10 @@ const hwSubmissionSchema = new mongoose.Schema({
   mentorId: {
     type: mongoose.Schema.Types.ObjectId,
     default: null
+  },
+  comments: {
+    type: [Comment],
+    default: []
   },
   grade: {
     type: String,
