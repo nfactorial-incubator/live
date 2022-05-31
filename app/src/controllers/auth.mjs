@@ -1,19 +1,22 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import User from '../model/user.mjs';
+import express from 'express';
+
+const controller = express.Router();
 
 const register = async (req, res) => {
     try {
         const { fullname, username, password, role } = req.body;
 
         if (!(fullname && username && password)) {
-            res.status(400).send("All input is required");
+            res.status(400).send('All input is required');
         }
 
         const oldUser = await User.findOne({ username });
 
         if (oldUser) {
-            return res.status(409).send("User Already Exist. Please Login");
+            return res.status(409).send('User Already Exist. Please Login');
         }
 
         const encryptedUserPassword = await bcrypt.hash(password, 10);
@@ -29,7 +32,7 @@ const register = async (req, res) => {
             { id: user._id, username, role },
             process.env.TOKEN_KEY,
             {
-                expiresIn: 5 * 60,
+                expiresIn: 5 * 60
             }
         );
 
@@ -45,7 +48,7 @@ const login = async (req, res) => {
         const { username, password } = req.body;
 
         if (!(username && password)) {
-            res.status(400).send("All input is required!")
+            res.status(400).send('All input is required!');
         }
 
         const user = await User.findOne({ username });
@@ -55,18 +58,20 @@ const login = async (req, res) => {
                 { id: user._id, username, role: user.role },
                 process.env.TOKEN_KEY,
                 {
-                    expiresIn: 5 * 60,
+                    expiresIn: 5 * 60
                 }
             );
             user.token = token;
 
             return res.status(200).json(user);
         }
-        return res.status(400).send("Invalid Credentials");
-
+        return res.status(400).send('Invalid Credentials');
     } catch (err) {
         console.log(err);
     }
 };
 
-export { register, login };
+controller.post('/register', register);
+controller.post('/login', login);
+
+export default controller;
