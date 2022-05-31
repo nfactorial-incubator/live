@@ -7,6 +7,7 @@ import isAuth from './middleware/isAuth.mjs';
 import unauthorizedHandler from './middleware/unauthorizedHandler.mjs';
 import hwAssignmentController from './controllers/hwAssignment.mjs';
 import hwSubmissionController from './controllers/hwSubmission.mjs';
+import ideaSubmissionController from './controllers/ideaSubmission.mjs';
 import authController from './controllers/auth.mjs';
 
 const app = express()
@@ -27,5 +28,6 @@ app.use('/', express.static(__dirname + '/static'));
 app.use('/auth', authController);
 app.use('/api/hw/assignment', hwAssignmentController);
 app.use('/api/hw/submission', hwSubmissionController);
+app.use('/api/idea/submission', ideaSubmissionController);
 
 export default app;
