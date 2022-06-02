@@ -79,11 +79,13 @@ export const ClippedDrawer = () => {
                 <ListItemButton onClick={() => handleTabChange(currentTab.id)}>
                   <ListItemIcon>
                     {currentTab.id === 1 ? (
-                      <DashboardIcon />
+                      <DashboardIcon htmlColor="#e01425" />
                     ) : currentTab.id === 2 ? (
-                      <HomeIcon />
+                      <HomeIcon htmlColor="#e01425" />
                     ) : (
-                      currentTab.id === 3 && <EmojiObjectsIcon />
+                      currentTab.id === 3 && (
+                        <EmojiObjectsIcon htmlColor="#e01425" />
+                      )
                     )}
                   </ListItemIcon>
                   <ListItemText primary={currentTab.name} />
@@ -97,7 +99,11 @@ export const ClippedDrawer = () => {
               <ListItem key={text} disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
-                    {index % 2 === 0 ? <SettingsIcon /> : <ExitToAppIcon />}
+                    {index % 2 === 0 ? (
+                      <SettingsIcon htmlColor="#e01425" />
+                    ) : (
+                      <ExitToAppIcon htmlColor="#e01425" />
+                    )}
                   </ListItemIcon>
                   <ListItemText primary={text} />
                 </ListItemButton>

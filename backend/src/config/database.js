@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
-const { MONGO_URI } = process.env;
+// const { MONGO_URI } = process.env;
 
 const connectToDatabase = () => {
     mongoose
-        .connect(MONGO_URI)
+        .connect('mongodb://localhost:27017/')
         .then(() => {
             console.log('Successfully connected to database');
         })

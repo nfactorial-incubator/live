@@ -7,8 +7,8 @@ import { ReactComponent as DefaultLoader } from "./assets/bean_eater.svg";
 function App() {
   return (
     <NFactorialTheme>
-      <AuthenticationDialog />
-      <DefaultLoader />
+      {/* <AuthenticationDialog /> */}
+      {/* <DefaultLoader /> */}
       <ClippedDrawer />
     </NFactorialTheme>
   );

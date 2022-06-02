@@ -1,4 +1,4 @@
-const app = require('./app.js');
+const app = require('./app');
 const databaseConnect = require('./config/database.js');
 
 app.get('/api/user', async (req, res) => {
@@ -13,6 +13,6 @@ app.get('/api/user', async (req, res) => {
 
 databaseConnect();
 
-app.listen(process.env.PORT, () => {
-    console.log(`Example app listening on port ${process.env.PORT}`);
+app.listen('8080', () => {
+    console.log(`Example app listening on port 8080`);
 });
