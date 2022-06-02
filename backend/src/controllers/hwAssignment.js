@@ -1,6 +1,6 @@
-import Assignment from '../model/hwAssignment.mjs';
-import express from 'express';
-import isMentor from '../middleware/isMentor.mjs';
+const Assignment = require('../model/hwAssignment.js');
+const express = require('express');
+const isMentor = require('../middleware/isMentor.js');
 
 const controller = express.Router();
 
@@ -66,4 +66,4 @@ controller.delete('/:id', isMentor, deleteAssignment);
 controller.get('/', getAllAssignments);
 controller.get('/:id', getAssignment);
 
-export default controller;
+module.exports = controller;
