@@ -1,16 +1,16 @@
-import './App.css';
-import {Header} from './components/Header'
-import {Table} from './components/Table'
+// import "./App.css";
+import { ClippedDrawer } from "./components/drawer";
+import { AuthenticationDialog } from "./components/auth";
+import { NFactorialTheme } from "./components/nfactorial-theme";
+import { ReactComponent as DefaultLoader } from "./assets/bean_eater.svg";
 
 function App() {
-
   return (
-    <div className="App" style={{
-      padding: '1rem'
-    }}>
-      <Header />
-      <Table />
-    </div>
+    <NFactorialTheme>
+      <AuthenticationDialog />
+      <DefaultLoader />
+      <ClippedDrawer />
+    </NFactorialTheme>
   );
 }
 
