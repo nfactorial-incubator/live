@@ -1,7 +1,7 @@
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
-import User from '../model/user.mjs';
-import express from 'express';
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const User = require('../model/user.js');
+const express = require('express');
 
 const controller = express.Router();
 
@@ -74,4 +74,4 @@ const login = async (req, res) => {
 controller.post('/register', register);
 controller.post('/login', login);
 
-export default controller;
+module.exports = controller;
