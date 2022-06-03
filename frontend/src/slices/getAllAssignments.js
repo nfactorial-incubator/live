@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOThmODQ1OGE0MzlkZTQxZGFmNTNiMiIsInVzZXJuYW1lIjoic2FtYXQiLCJyb2xlIjoibWVudG9yIiwiaWF0IjoxNjU0MTkzOTk0LCJleHAiOjE2NTQxOTQyOTR9.coYZAvK_i-CbylQMyQVj5fza2Sasj7P03IJZiuVwmlY";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOThmODQ1OGE0MzlkZTQxZGFmNTNiMiIsInVzZXJuYW1lIjoic2FtYXQiLCJyb2xlIjoibWVudG9yIiwiaWF0IjoxNjU0MjY4OTQ5LCJleHAiOjE2NTQyNjkyNDl9.ItTagkcoMX8m4fCHdGEIT7vkRHvq_0g6wvBkG7F3QYU";
 
 export const getAllAssignments = createApi({
   reducerPath: "getAllAssignments",
@@ -13,10 +13,10 @@ export const getAllAssignments = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getPokemonByName: builder.query({
+    getAllOfthem: builder.query({
       query: (name) => `hw/assignment`,
     }),
   }),
 });
 
-export const { useGetPokemonByNameQuery } = getAllAssignments;
+export const { useGetAllOfthemQuery } = getAllAssignments;

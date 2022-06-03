@@ -14,6 +14,10 @@ export const AuthenticationDialog = () => {
     setOpen(false);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const fields = [
     {
       name: "fullname",
@@ -33,7 +37,7 @@ export const AuthenticationDialog = () => {
   ];
 
   return (
-    <Dialog open={open}>
+    <Dialog open={open} onClose={handleClose}>
       <DialogTitle>Регистрация</DialogTitle>
       <DialogContent>
         <DialogContentText>

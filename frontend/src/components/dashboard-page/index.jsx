@@ -39,7 +39,7 @@ const tabs = [
   },
 ];
 
-export const ClippedDrawer = () => {
+export const DashboardPage = () => {
   const [tab, setTab] = React.useState(1);
 
   const handleTabChange = (tabId) => {
