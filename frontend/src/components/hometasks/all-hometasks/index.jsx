@@ -2,7 +2,7 @@ import Grid from "@mui/material/Grid";
 import { useGetAllOfthemQuery } from "../../../slices/getAllAssignments";
 import { ReactComponent as DefaultLoader } from "../../../assets/bean_eater.svg";
 import { ErrorComponent } from "../../error-component";
-import { CardComponent } from "../../card-component";
+import { HometaskCard } from "../../hometask-card";
 
 export const AllHometasks = () => {
   const {
@@ -16,10 +16,10 @@ export const AllHometasks = () => {
   if (isError) return <ErrorComponent />;
 
   return (
-    <Grid container spacing={1}>
+    <Grid container spacing={3}>
       {allHometasks.map((hometask) => (
-        <Grid key={hometask._id} item>
-          <CardComponent {...{ hometask }} />
+        <Grid key={hometask._id} item display="flex" alignItems="flex-start">
+          <HometaskCard {...{ hometask }} />
         </Grid>
       ))}
     </Grid>

@@ -1,4 +1,6 @@
-import * as React from "react";
+import React from "react";
+import { Link, Route, Routes } from "react-router-dom";
+
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
@@ -17,34 +19,36 @@ import HomeIcon from "@mui/icons-material/Home";
 import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 
 import { Hometasks } from "../hometasks";
 import { Dashboards } from "../dashboards";
 import { Ideas } from "../ideas";
+import { HometaskPage } from "../hometask-page";
+import { Submissions } from "../submissions";
 
 const drawerWidth = 240;
 
 const tabs = [
   {
-    id: 1,
     name: "Дэшборды",
+    id: "dashboards",
+    icon: <DashboardIcon htmlColor="#e01425" />,
   },
   {
-    id: 2,
+    id: "hometasks",
     name: "Домашки",
+    icon: <HomeIcon htmlColor="#e01425" />,
   },
   {
-    id: 3,
+    id: "ideas",
     name: "Идеи",
+    icon: <EmojiObjectsIcon htmlColor="#e01425" />,
   },
 ];
 
 export const DashboardPage = () => {
-  const [tab, setTab] = React.useState(1);
-
-  const handleTabChange = (tabId) => {
-    setTab(tabId);
-  };
+  const isMentor = true;
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -76,23 +80,23 @@ export const DashboardPage = () => {
           <List>
             {tabs.map((currentTab) => (
               <ListItem key={currentTab.id} disablePadding>
-                <ListItemButton onClick={() => handleTabChange(currentTab.id)}>
-                  <ListItemIcon>
-                    {currentTab.id === 1 ? (
-                      <DashboardIcon htmlColor="#e01425" />
-                    ) : currentTab.id === 2 ? (
-                      <HomeIcon htmlColor="#e01425" />
-                    ) : (
-                      currentTab.id === 3 && (
-                        <EmojiObjectsIcon htmlColor="#e01425" />
-                      )
-                    )}
-                  </ListItemIcon>
+                <ListItemButton component={Link} to={currentTab.id}>
+                  <ListItemIcon>{currentTab.icon}</ListItemIcon>
                   <ListItemText primary={currentTab.name} />
                 </ListItemButton>
               </ListItem>
             ))}
           </List>
+          {isMentor && (
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to="submissions">
+                <ListItemIcon>
+                  <DriveFileRenameOutlineIcon htmlColor="#e01425" />
+                </ListItemIcon>
+                <ListItemText primary="Материалы" />
+              </ListItemButton>
+            </ListItem>
+          )}
           <Divider />
           <List>
             {["Настройки", "Выход"].map((text, index) => (
@@ -113,9 +117,16 @@ export const DashboardPage = () => {
         </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        {tab === 1 && <Dashboards />}
-        {tab === 2 && <Hometasks />}
-        {tab === 3 && <Ideas />}
+        <Routes>
+          <Route path="dashboards" element={<Dashboards />} />
+
+          <Route path="hometasks" element={<Hometasks />}>
+            <Route path=":hometaskID" element={<HometaskPage />}></Route>
+          </Route>
+
+          <Route path="ideas" element={<Ideas />} />
+          <Route path="submissions" element={<Submissions />} />
+        </Routes>
       </Box>
     </Box>
   );

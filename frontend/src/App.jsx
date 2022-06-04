@@ -12,7 +12,7 @@ function App() {
   return (
     <NFactorialTheme>
       <AuthRouterWrapper>
-        <Route path="/test" element={<DashboardPage />} />
+        <Route path="test/*" element={<DashboardPage />} />
 
         <Route path="/" element={<PublicPage />} />
         <Route path="/signup" element={<SignUp />} />
