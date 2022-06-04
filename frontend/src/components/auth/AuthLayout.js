@@ -11,7 +11,7 @@ export default function AuthLayout() {
           <Link to="/">Public Page</Link>
         </li>
         <li>
-          <Link to="/protected">Protected Page</Link>
+          <Link to="/dashboards">Protected Page</Link>
         </li>
       </ul>
 

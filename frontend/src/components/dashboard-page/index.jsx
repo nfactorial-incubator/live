@@ -113,8 +113,6 @@ export const DashboardPage = () => {
         </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Toolbar />
-
         {tab === 1 && <Dashboards />}
         {tab === 2 && <Hometasks />}
         {tab === 3 && <Ideas />}

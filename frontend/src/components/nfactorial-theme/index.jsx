@@ -25,6 +25,14 @@ const theme = createTheme({
         },
       },
     },
+    MuiToolbar: {
+      styleOverrides: {
+        root: {
+          display: "flex",
+          justifyContent: "space-between",
+        },
+      },
+    },
   },
 });
 
