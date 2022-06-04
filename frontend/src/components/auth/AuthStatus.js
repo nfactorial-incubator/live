@@ -1,6 +1,6 @@
 import React from "react";
 import useAuth from "./useAuth";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function AuthStatus() {
   let auth = useAuth();
@@ -8,7 +8,7 @@ export default function AuthStatus() {
   let navigate = useNavigate();
 
   if (!auth.user) {
-    return <p>You are not logged in.</p>;
+    return <Navigate to={'/auth/login'}/>
   }
 
   return (

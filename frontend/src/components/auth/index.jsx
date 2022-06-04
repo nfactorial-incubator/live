@@ -37,29 +37,31 @@ export const AuthenticationDialog = () => {
   ];
 
   return (
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Регистрация</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          Зарегистрируйтесь перед началом работы в инкубаторе
-        </DialogContentText>
+    <div>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Регистрация</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+              Зарегистрируйтесь перед началом работы в инкубаторе
+          </DialogContentText>
 
-        {fields.map((field) => (
-          <TextField
-            key={field.name}
-            autoFocus
-            margin="dense"
-            id={field.name}
-            label={field.label}
-            type={field.type}
-            fullWidth
-            variant="standard"
-          />
-        ))}
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleSubmit}>Зарегистрироваться!</Button>
-      </DialogActions>
-    </Dialog>
+          {fields.map((field) => (
+            <TextField
+              key={field.name}
+              autoFocus
+              margin="dense"
+              id={field.name}
+              label={field.label}
+              type={field.type}
+              fullWidth
+              variant="standard"
+            />
+          ))}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleSubmit}>Зарегистрироваться!</Button>
+        </DialogActions>
+      </Dialog>
+    </div>
   );
 };

@@ -7,7 +7,7 @@ export default function AuthRouterWrapper({ children }) {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          <Route element={<AuthLayout />}>{children}</Route>
+        {children}
         </Routes>
       </AuthProvider>
     </BrowserRouter>

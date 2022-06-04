@@ -17,6 +17,7 @@ app.use(express.json());
 app.use('/api', isAuth);
 app.use(unauthorizedHandler);
 
+
 // static
 app.use('/', express.static(__dirname + '/static'));
 
