@@ -11,9 +11,9 @@ export const Dashboards = () => {
         <Typography variant="h5">Дэшборды</Typography>
         <Divider />
       </Grid>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <DashboardGrid />
-      </Grid>
+      </Grid> */}
 
       <Grid item xs={12}>
         <Typography color="red">Наша золотая малина</Typography>

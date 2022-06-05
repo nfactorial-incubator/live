@@ -1,5 +1,5 @@
 import Grid from "@mui/material/Grid";
-import { useGetAllOfthemQuery } from "../../../slices/getAllAssignments";
+import { useGetAllAssignmentsQuery } from "../../../slices/homeworksSlice";
 import { ReactComponent as DefaultLoader } from "../../../assets/bean_eater.svg";
 import { ErrorComponent } from "../../error-component";
 import { HometaskCard } from "../../hometask-card";
@@ -9,7 +9,7 @@ export const AllHometasks = () => {
     data: allHometasks = [],
     isLoading,
     isError,
-  } = useGetAllOfthemQuery();
+  } = useGetAllAssignmentsQuery();
 
   if (isLoading) return <DefaultLoader />;
 

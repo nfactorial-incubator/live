@@ -8,16 +8,17 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { ReactComponent as DefaultLoader } from "../../assets/bean_eater.svg";
 import { ErrorComponent } from "../error-component";
 
-import { useGetAssignmentQuery } from "../../slices/getAssignment";
+import { useGetAssignmentQuery } from "../../slices/homeworksSlice";
 import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useSubmitAssignmentMutation } from "../../slices/submissionSlice";
+import { useSubmitAssignmentMutation } from "../../slices/homeworksSlice";
 
 const FORM_ID = "submit_assignment";
 
 export const HometaskPage = () => {
   const navigate = useNavigate();
   const { hometaskID } = useParams();
+
   const [submitAssignment, { isLoading: isSubmissionLoading }] =
     useSubmitAssignmentMutation();
 

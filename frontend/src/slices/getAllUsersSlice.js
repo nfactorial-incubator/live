@@ -11,20 +11,15 @@ export const getAllUsers = createApi({
       return headers;
     },
   }),
-  tagTypes: ["post"],
+  tagTypes: ["post", "user"],
   endpoints: (builder) => ({
     getAllOfUs: builder.query({
       query: (name) => `all`,
-      providesTags: (result, error, arg) =>
-        result
-          ? [
-              ...result.map(({ _id }) => ({
-                type: "post",
-                _id,
-              })),
-              "post",
-            ]
-          : ["post"],
+      providesTags: ["post"],
+    }),
+    getOnlyMe: builder.query({
+      query: (name) => `profile`,
+      providesTags: ["user"],
     }),
     increaseCounter: builder.mutation({
       query: (post) => ({
@@ -32,12 +27,13 @@ export const getAllUsers = createApi({
         method: "POST",
         body: post,
       }),
-      invalidatesTags: (result, error, arg) => {
-        console.log(arg);
-        return [{ type: "post", id: arg._id }];
-      },
+      invalidatesTags: ["post"],
     }),
   }),
 });
 
-export const { useGetAllOfUsQuery, useIncreaseCounterMutation } = getAllUsers;
+export const {
+  useGetAllOfUsQuery,
+  useGetOnlyMeQuery,
+  useIncreaseCounterMutation,
+} = getAllUsers;

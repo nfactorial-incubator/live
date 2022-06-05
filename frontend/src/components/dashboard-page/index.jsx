@@ -13,7 +13,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import HomeIcon from "@mui/icons-material/Home";
 import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
@@ -26,6 +25,8 @@ import { Dashboards } from "../dashboards";
 import { Ideas } from "../ideas";
 import { HometaskPage } from "../hometask-page";
 import { Submissions } from "../submissions";
+
+import { useGetOnlyMeQuery } from "../../slices/getAllUsersSlice";
 
 const drawerWidth = 240;
 
@@ -48,7 +49,7 @@ const tabs = [
 ];
 
 export const DashboardPage = () => {
-  const isMentor = true;
+  const { data } = useGetOnlyMeQuery();
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -86,17 +87,18 @@ export const DashboardPage = () => {
                 </ListItemButton>
               </ListItem>
             ))}
+            {data && data.role === "mentor" && (
+              <ListItem disablePadding>
+                <ListItemButton component={Link} to="submissions">
+                  <ListItemIcon>
+                    <DriveFileRenameOutlineIcon htmlColor="#e01425" />
+                  </ListItemIcon>
+                  <ListItemText primary="Материалы" />
+                </ListItemButton>
+              </ListItem>
+            )}
           </List>
-          {isMentor && (
-            <ListItem disablePadding>
-              <ListItemButton component={Link} to="submissions">
-                <ListItemIcon>
-                  <DriveFileRenameOutlineIcon htmlColor="#e01425" />
-                </ListItemIcon>
-                <ListItemText primary="Материалы" />
-              </ListItemButton>
-            </ListItem>
-          )}
+
           <Divider />
           <List>
             {["Настройки", "Выход"].map((text, index) => (

@@ -5,11 +5,11 @@ import { AllHometasks } from "./all-hometasks";
 import { CreateHometask } from "./create-hometask";
 
 import { Outlet, useParams } from "react-router-dom";
+import { useGetOnlyMeQuery } from "../../slices/getAllUsersSlice";
 
 export const Hometasks = () => {
+  const { data } = useGetOnlyMeQuery();
   const { hometaskID } = useParams();
-
-  const isMentor = true;
 
   if (hometaskID) return <Outlet />;
 
@@ -20,7 +20,7 @@ export const Hometasks = () => {
         <Divider />
       </Grid>
 
-      {isMentor && (
+      {data && data.role === "mentor" && (
         <Grid item>
           <CreateHometask />
         </Grid>
