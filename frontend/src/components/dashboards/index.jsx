@@ -1,7 +1,7 @@
 import { Divider } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { UserLists } from "../user-lists";
+import { DashboardGrid } from "../dashboard-grid";
 
 export const Dashboards = () => {
   return (
@@ -11,7 +11,7 @@ export const Dashboards = () => {
         <Divider />
       </Grid>
       <Grid item xs={12}>
-        <UserLists />
+        <DashboardGrid />
       </Grid>
     </Grid>
   );
