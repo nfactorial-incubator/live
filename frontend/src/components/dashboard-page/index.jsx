@@ -118,14 +118,17 @@ export const DashboardPage = () => {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Routes>
-          <Route path="dashboards" element={<Dashboards />} />
+          <Route path="/*">
+            <Route index element={<Dashboards />} />
+            <Route path="dashboards" element={<Dashboards />} />
 
-          <Route path="hometasks" element={<Hometasks />}>
-            <Route path=":hometaskID" element={<HometaskPage />}></Route>
+            <Route path="hometasks" element={<Hometasks />}>
+              <Route path=":hometaskID" element={<HometaskPage />}></Route>
+            </Route>
+
+            <Route path="ideas" element={<Ideas />} />
+            <Route path="submissions" element={<Submissions />} />
           </Route>
-
-          <Route path="ideas" element={<Ideas />} />
-          <Route path="submissions" element={<Submissions />} />
         </Routes>
       </Box>
     </Box>

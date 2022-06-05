@@ -5,16 +5,19 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import { Grid } from "@mui/material";
+import { ReactComponent as DefaultLoader } from "../../assets/bean_eater.svg";
 
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useForm } from "react-hook-form";
+import { useLoginMutation } from "../../slices/loginSlice";
 
 const FORM_ID = "login_form";
 
 export const Login = () => {
   const [open, setOpen] = React.useState(true);
   const navigate = useNavigate();
+  const [login, { isLoading }] = useLoginMutation();
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -42,14 +45,22 @@ export const Login = () => {
   ];
 
   const submit = handleSubmit(async (data) => {
-    await axios.postForm(
-      "http://127.0.0.1:8080/auth/login",
-      { ...data },
-      {
-        headers: { "content-type": "application/json" },
-      }
-    );
+    login(data)
+      .unwrap()
+      .then((resp) => {
+        localStorage.setItem("nf-token", resp.token);
+        navigate("/classroom");
+      });
   });
+
+  if (isLoading)
+    return (
+      <Grid container justifyContent="center" alignItems="center">
+        <Grid item xs={12} height={1000}>
+          <DefaultLoader />
+        </Grid>
+      </Grid>
+    );
 
   return (
     <Dialog open={open} onClose={handleClose}>

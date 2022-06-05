@@ -33,9 +33,8 @@ export const SignUp = () => {
   const submit = handleSubmit(async (data) => {
     signUp(data)
       .unwrap()
-      .then((resp) => {
-        localStorage.setItem("nf-token", resp.token);
-        navigate("/classroom");
+      .then(() => {
+        navigate("/login");
       });
   });
 
