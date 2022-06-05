@@ -9,7 +9,8 @@ const userSchema = new mongoose.Schema({
         default: 'student',
         enum: ['student', 'mentor']
     },
-    token: { type: String }
+    token: { type: String },
+    raspberries: { type: Number, default: 0 }
 });
 
 module.exports = mongoose.model('user', userSchema);

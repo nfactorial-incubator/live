@@ -18,6 +18,36 @@ const profile = async (req, res) => {
     }
 };
 
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find({});
+        return res.status(200).json(users);
+    } catch (err) {
+        console.log(err);
+        return res.status(502).json({ message: 'some shit on our side' });
+    }
+};
+
+const increaseUsersRaspberry = async (req, res) => {
+    try {
+        const { id } = req.body;
+
+        const currentUser = await User.findOne({ _id: id });
+
+        const updated = await User.findOneAndUpdate(
+            { _id: id },
+            { raspberries: currentUser.raspberries + 1 }
+        );
+
+        return res.status(200).json(updated);
+    } catch (err) {
+        console.log(err);
+        return res.status(502).json({ message: 'some shit on our side' });
+    }
+};
+
 controller.get('/profile', profile);
+controller.get('/all', getAllUsers);
+controller.post('/increaseCounter', increaseUsersRaspberry);
 
 module.exports = controller;
