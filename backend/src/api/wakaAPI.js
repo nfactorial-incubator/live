@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { getUsernameByMap } = require('./mappings');
 
 const WAKAAPI_ENDPOINT = 'http://159.65.121.101:3000/api';
 const API_KEY = 'ZjA0OTRkMzEtMjMwMC00NjQ3LTk1NjktZWNhOTQ4NzFhZTRj';
