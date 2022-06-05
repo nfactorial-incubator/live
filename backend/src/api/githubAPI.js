@@ -7,7 +7,7 @@ const CACHE_EXPIRE_MINUTES = 3;
 
 const headers = {
     'content-type': 'application/json',
-    Authorization: 'bearer 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'
+    Authorization: 'bearer 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'
 };
 
 const organizationsGraphQLQuery = `
@@ -53,6 +53,7 @@ module.exports = class GithubAPI {
                 }
             }
         });
+
         this.cache.organizations = {
             data: response.data.data.organization.repositories.nodes,
             time: now

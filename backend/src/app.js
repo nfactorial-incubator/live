@@ -6,6 +6,7 @@ const unauthorizedHandler = require('./middleware/unauthorizedHandler.js');
 const hwAssignmentController = require('./controllers/hwAssignment.js');
 const hwSubmissionController = require('./controllers/hwSubmission.js');
 const ideaSubmissionController = require('./controllers/ideaSubmission.js');
+const dashboardController = require('./controllers/dashboard.js');
 const authController = require('./controllers/auth.js');
 const userController = require('./controllers/user.js');
 
@@ -45,8 +46,8 @@ app.use(unauthorizedHandler);
 // static
 app.use('/', express.static(__dirname + '/static'));
 
-// routes
 app.use('/auth', authController);
+app.use('/api/dashboard', dashboardController);
 app.use('/api/hw/assignment', hwAssignmentController);
 app.use('/api/hw/submission', hwSubmissionController);
 app.use('/api/idea/submission', ideaSubmissionController);
