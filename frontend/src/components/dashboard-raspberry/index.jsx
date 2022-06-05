@@ -15,8 +15,10 @@ import {
   useGetAllOfUsQuery,
   useIncreaseCounterMutation,
 } from "../../slices/getAllUsersSlice";
+import { useGetOnlyMeQuery } from "../../slices/getAllUsersSlice";
 
 export const DashboardRaspberry = () => {
+  const { data: isMentorData } = useGetOnlyMeQuery();
   const { data: users = [], isLoading, isError } = useGetAllOfUsQuery();
   const [increaseCounter, { isLoading: isIncreasedLoading }] =
     useIncreaseCounterMutation();
@@ -36,7 +38,9 @@ export const DashboardRaspberry = () => {
             <TableCell>ФИО</TableCell>
             <TableCell align="center">ментор/студент</TableCell>
             <TableCell align="center">Количество малин</TableCell>
-            <TableCell align="center">Увеличить</TableCell>
+            {isMentorData && isMentorData.role === "mentor" && (
+              <TableCell align="center">Увеличить</TableCell>
+            )}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -56,11 +60,13 @@ export const DashboardRaspberry = () => {
               <TableCell align="center" component="th" scope="row">
                 {row.raspberries}
               </TableCell>
-              <TableCell align="center">
-                <IconButton onClick={() => increaseCounter({ id: row._id })}>
-                  <RaspberrySVG fill="#e01425" width={30} height={30} />
-                </IconButton>
-              </TableCell>
+              {isMentorData && isMentorData.role === "mentor" && (
+                <TableCell align="center">
+                  <IconButton onClick={() => increaseCounter({ id: row._id })}>
+                    <RaspberrySVG fill="#e01425" width={30} height={30} />
+                  </IconButton>
+                </TableCell>
+              )}
             </TableRow>
           ))}
         </TableBody>
