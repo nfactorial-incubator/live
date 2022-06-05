@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOThmODQ1OGE0MzlkZTQxZGFmNTNiMiIsInVzZXJuYW1lIjoic2FtYXQiLCJyb2xlIjoibWVudG9yIiwiaWF0IjoxNjU0MzQ0NjgwLCJleHAiOjE2NTQzNjI2ODB9.pv6sFZ77Yc0tSDmiObWmRE8eYaW7sSUJaAm6BZpJ68w";
+const TOKEN = localStorage.getItem("nf-token");
 
 export const getAssignment = createApi({
   reducerPath: "getAssignment",

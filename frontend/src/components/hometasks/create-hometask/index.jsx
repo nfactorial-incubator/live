@@ -2,11 +2,14 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import { useCreateAssignmentMutation } from "../../../slices/homeworksSlice";
+import { ReactComponent as DefaultLoader } from "../../../assets/bean_eater.svg";
 
 const FORM_ID = "create_hometask_form";
 
 export const CreateHometask = () => {
+  const [createAssignment, { isLoading }] = useCreateAssignmentMutation();
+
   const { register, handleSubmit } = useForm({
     defaultValues: {
       title: "",
@@ -15,10 +18,10 @@ export const CreateHometask = () => {
   });
 
   const submit = handleSubmit(async (data) => {
-    await axios.postForm("http://127.0.0.1:8080/api/hw/assignment", data, {
-      headers: { "content-type": "application/json" },
-    });
+    createAssignment(data);
   });
+
+  if (isLoading) return <DefaultLoader />;
 
   return (
     <form id={FORM_ID} onSubmit={submit}>

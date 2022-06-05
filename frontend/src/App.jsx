@@ -15,10 +15,10 @@ function App() {
         <Route path="test/*" element={<DashboardPage />} />
 
         <Route path="/" element={<PublicPage />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="signup" element={<SignUp />} />
+        <Route path="login" element={<Login />} />
         <Route
-          path="/dashboards"
+          path="classroom/*"
           element={
             <RequireAuth>
               <DashboardPage />

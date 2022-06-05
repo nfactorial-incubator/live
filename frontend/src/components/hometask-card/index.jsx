@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 export const HometaskCard = ({ hometask }) => {
   const isMentor = true;
-  const token = "asd";
+  const TOKEN = localStorage.getItem("nf-token");
 
   const description =
     hometask.description.length > 32
@@ -22,7 +22,7 @@ export const HometaskCard = ({ hometask }) => {
   const deleteHometask = async (id) => {
     await axios.delete(`http://127.0.0.1:8080/api/hw/assignment/${id}`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${TOKEN}`,
         "content-type": "application/json",
       },
     });

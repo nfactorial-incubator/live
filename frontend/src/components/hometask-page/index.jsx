@@ -1,23 +1,25 @@
 import * as React from "react";
 import Grid from "@mui/material/Grid";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { IconButton } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import { ReactComponent as DefaultLoader } from "../../assets/bean_eater.svg";
+import { ErrorComponent } from "../error-component";
 
-import axios from "axios";
-import { Link } from "react-router-dom";
 import { useGetAssignmentQuery } from "../../slices/getAssignment";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useSubmitAssignmentMutation } from "../../slices/submissionSlice";
 
 const FORM_ID = "submit_assignment";
 
 export const HometaskPage = () => {
+  const navigate = useNavigate();
   const { hometaskID } = useParams();
+  const [submitAssignment, { isLoading: isSubmissionLoading }] =
+    useSubmitAssignmentMutation();
 
   const {
     isLoading,
@@ -25,9 +27,6 @@ export const HometaskPage = () => {
     data: assignment,
     isSuccess,
   } = useGetAssignmentQuery(hometaskID);
-
-  const isMentor = true;
-  const token = "asd";
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -37,22 +36,31 @@ export const HometaskPage = () => {
   });
 
   const submit = handleSubmit(async (data) => {
-    await axios.postForm(
-      "http://127.0.0.1:8080/api/hw/submission",
-      { role: "mentor", ...data },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "content-type": "application/json",
-        },
-      }
-    );
+    submitAssignment({
+      title: assignment.title,
+      assignmentId: assignment._id,
+      ...data,
+    })
+      .unwrap()
+      .then((resp) => {
+        navigate(-1);
+      });
   });
+
+  if (isLoading || isSubmissionLoading) return <DefaultLoader />;
+
+  if (isError) return <ErrorComponent />;
 
   if (isSuccess)
     return (
       <form id={FORM_ID} onSubmit={submit}>
         <Grid container spacing={3} flexDirection="column">
+          <Grid item>
+            <IconButton onClick={() => navigate(-1)}>
+              <KeyboardBackspaceIcon htmlColor="#e01425" />
+            </IconButton>
+          </Grid>
+
           <Grid item>
             <Typography variant="h5" component="div">
               {assignment.title}
@@ -60,40 +68,27 @@ export const HometaskPage = () => {
           </Grid>
 
           <Grid item>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            <Typography color="text.secondary">
               {assignment.description}
             </Typography>
           </Grid>
 
           <Grid item>
             <TextField
-              {...register("title")}
-              autoFocus
-              margin="dense"
-              id="title"
-              label="Название домашки"
-              type="text"
-              fullWidth
-              variant="standard"
-            />
-          </Grid>
-
-          <Grid item>
-            <TextField
               {...register("description")}
               autoFocus
-              margin="dense"
               id="title"
-              label="Описание"
+              label="Опишите своё домашнее задание, приложив файлы если нужно"
               type="text"
               fullWidth
               variant="standard"
             />
           </Grid>
-
-          <Button type="submit" form={FORM_ID}>
-            Сдать домашку
-          </Button>
+          <Grid item>
+            <Button type="submit" form={FORM_ID}>
+              Сдать домашку
+            </Button>
+          </Grid>
         </Grid>
       </form>
     );

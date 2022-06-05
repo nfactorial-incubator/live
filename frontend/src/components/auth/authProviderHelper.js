@@ -1,13 +1,21 @@
-const fakeAuthProvider = {
+import axios from "axios";
+
+const authProviderHelper = {
   isAuthenticated: false,
-  signin(callback) {
-    fakeAuthProvider.isAuthenticated = true;
-    setTimeout(callback, 100); // fake async
+  signin(data) {
+    authProviderHelper.isAuthenticated = true;
+    axios.postForm(
+      "http://127.0.0.1:8080/auth/register",
+      { role: "mentor", ...data },
+      {
+        headers: { "content-type": "application/json" },
+      }
+    );
   },
   signout(callback) {
-    fakeAuthProvider.isAuthenticated = false;
+    authProviderHelper.isAuthenticated = false;
     setTimeout(callback, 100);
   },
 };
 
-export { fakeAuthProvider };
+export { authProviderHelper };

@@ -1,5 +1,5 @@
 import React from "react";
-import { fakeAuthProvider } from "./authProviderHelper";
+import { authProviderHelper } from "./authProviderHelper";
 
 // import { AuthContext } from "./AuthContext";
 
@@ -9,14 +9,14 @@ export default function AuthProvider({ children }) {
   let [user, setUser] = React.useState(null);
 
   let signin = (newUser, callback) => {
-    return fakeAuthProvider.signin(() => {
+    return authProviderHelper.signin(() => {
       setUser(newUser);
       callback();
     });
   };
 
   let signout = (callback) => {
-    return fakeAuthProvider.signout(() => {
+    return authProviderHelper.signout(() => {
       setUser(null);
       callback();
     });

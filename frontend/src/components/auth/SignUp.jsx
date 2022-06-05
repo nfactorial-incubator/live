@@ -6,15 +6,20 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { ReactComponent as DefaultLoader } from "../../assets/bean_eater.svg";
+import { useSignUpMutation } from "../../slices/signUpSlice";
 
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { Grid } from "@mui/material";
 
 const FORM_ID = "sign_up_form";
 
 export const SignUp = () => {
   const [open, setOpen] = React.useState(true);
+
+  const [signUp, { isLoading }] = useSignUpMutation();
+
   const navigate = useNavigate();
 
   const { register, handleSubmit } = useForm({
@@ -26,17 +31,16 @@ export const SignUp = () => {
   });
 
   const submit = handleSubmit(async (data) => {
-    await axios.postForm(
-      "http://127.0.0.1:8080/auth/register",
-      { role: "mentor", ...data },
-      {
-        headers: { "content-type": "application/json" },
-      }
-    );
+    signUp(data)
+      .unwrap()
+      .then((resp) => {
+        localStorage.setItem("nf-token", resp.token);
+        navigate("/classroom");
+      });
   });
 
   const handleClose = () => {
-    navigate("/");
+    // navigate("/");
     setOpen(false);
   };
 
@@ -57,6 +61,15 @@ export const SignUp = () => {
       label: "Введите пароль",
     },
   ];
+
+  if (isLoading)
+    return (
+      <Grid container justifyContent="center" alignItems="center">
+        <Grid item xs={12} height={1000}>
+          <DefaultLoader />
+        </Grid>
+      </Grid>
+    );
 
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -86,7 +99,7 @@ export const SignUp = () => {
           <Button type="submit" form={FORM_ID}>
             Зарегистрироваться!
           </Button>
-        </DialogActions>{" "}
+        </DialogActions>
       </form>
     </Dialog>
   );
