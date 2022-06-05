@@ -18,7 +18,7 @@ export const Login = () => {
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
-      login: "",
+      username: "",
       password: "",
     },
   });
@@ -30,7 +30,7 @@ export const Login = () => {
 
   const fields = [
     {
-      name: "login",
+      name: "username",
       type: "text",
       label: "Введите имя пользователя",
     },
@@ -43,8 +43,8 @@ export const Login = () => {
 
   const submit = handleSubmit(async (data) => {
     await axios.postForm(
-      "http://127.0.0.1:8080/api/auth/login",
-      { role: "mentor", ...data },
+      "http://127.0.0.1:8080/auth/login",
+      { ...data },
       {
         headers: { "content-type": "application/json" },
       }
