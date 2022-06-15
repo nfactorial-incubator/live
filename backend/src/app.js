@@ -13,7 +13,7 @@ const userController = require('./controllers/user.js');
 const app = express();
 
 // middleware
-var whitelist = ['http://localhost:3000']; //white list consumers
+var whitelist = ['http://localhost:1337']; //white list consumers
 var corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {

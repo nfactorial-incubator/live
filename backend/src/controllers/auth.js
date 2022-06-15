@@ -7,30 +7,36 @@ const controller = express.Router();
 
 const register = async (req, res) => {
     try {
-        const { fullname, username, password, role } = req.body;
+        const { firstname, lastname, nickname, password, role, secret } =
+            req.body;
 
-        if (!(fullname && username && password)) {
+        if (!(firstname && lastname && nickname && password)) {
             res.status(400).send('All input is required');
         }
 
-        const oldUser = await User.findOne({ username });
+        const oldUser = await User.findOne({ nickname });
 
         if (oldUser) {
             return res.status(409).send('User Already Exist. Please Login');
         }
 
+        if (!(role === 'mentor' && secret === process.env.MENTOR_SECRET)) {
+            return res.status(401).json({ message: 'Invalid Mentor Secret!' });
+        }
+
         const encryptedUserPassword = await bcrypt.hash(password, 10);
 
         const user = await User.create({
-            fullname,
-            username,
+            firstname,
+            lastname,
+            nickname,
             password: encryptedUserPassword,
             role
         });
 
         const token = jwt.sign(
-            { id: user._id, username, role },
-            'eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY1MzczMzIzMiwiaWF0IjoxNjUzNzMzMjMyfQ.hWeyBordvDqwpZNdFA3WP37Kr8HSJs7P8fRB2LUy2mk',
+            { id: user._id, nickname, role },
+            process.env.TOKEN_KEY,
             {
                 expiresIn: 5 * 60 * 60
             }
@@ -45,18 +51,18 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { nickname, password } = req.body;
 
-        if (!(username && password)) {
+        if (!(nickname && password)) {
             res.status(400).send('All input is required!');
         }
 
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ nickname });
 
         if (user && (await bcrypt.compare(password, user.password))) {
             const token = jwt.sign(
-                { id: user._id, username, role: user.role },
-                'eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY1MzczMzIzMiwiaWF0IjoxNjUzNzMzMjMyfQ.hWeyBordvDqwpZNdFA3WP37Kr8HSJs7P8fRB2LUy2mk',
+                { id: user._id, nickname, role: user.role },
+                process.env.TOKEN_KEY,
                 {
                     expiresIn: 5 * 60 * 60
                 }

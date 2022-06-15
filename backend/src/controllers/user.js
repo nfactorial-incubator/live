@@ -5,8 +5,8 @@ const controller = express.Router();
 
 const profile = async (req, res) => {
     try {
-        const username = req.auth.username;
-        const user = await User.findOne({ username });
+        const nickname = req.auth.nickname;
+        const user = await User.findOne({ nickname });
 
         if (user) {
             return res.status(201).json(user);

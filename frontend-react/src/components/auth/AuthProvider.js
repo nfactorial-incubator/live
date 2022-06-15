@@ -1,8 +1,6 @@
 import React from "react";
 import { authProviderHelper } from "./authProviderHelper";
 
-// import { AuthContext } from "./AuthContext";
-
 let AuthContext = React.createContext("");
 
 export default function AuthProvider({ children }) {

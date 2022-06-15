@@ -8,7 +8,6 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { ReactComponent as DefaultLoader } from "../../assets/bean_eater.svg";
 import { useSignUpMutation } from "../../slices/signUpSlice";
-
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Grid } from "@mui/material";
