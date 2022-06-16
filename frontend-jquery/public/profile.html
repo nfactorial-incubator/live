@@ -147,6 +147,7 @@
           <div class="col-md-5">
             <h6>Profile picture</h6>
             <img
+              id="profile-picture"
               src="https://github.com/nugmanoff.png"
               class="img-thumbnail rounded-circle"
               width="200px"
@@ -183,12 +184,33 @@
 
       $("#upload-button").click(() => {
         $("#upload-input").click();
-        console.log($("input[type=file]").val());
       });
 
-      // $("#upload-input").click((e) => {
-      //   console.log(e);
-      // });
+      $("#upload-input").on("change", (e) => {
+        previewFile();
+        // const img = e.currentTarget.files[0];
+        // $("#profile-picture").attr("src");
+      });
+
+      const previewFile = () => {
+        const preview = document.getElementById("profile-picture");
+        const file = document.getElementById("upload-input").files[0];
+        const reader = new FileReader();
+
+        reader.addEventListener(
+          "load",
+          function () {
+            // convert image file to base64 string
+            preview.src = reader.result;
+            console.log("result", reader.result);
+          },
+          false
+        );
+
+        if (file) {
+          reader.readAsDataURL(file);
+        }
+      };
     </script>
   </body>
 </html>
