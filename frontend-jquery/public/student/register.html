@@ -115,14 +115,19 @@
               "Content-type": "application/json; charset=UTF-8",
             },
           });
+
           const json = await response.json();
+
+          if (!response.ok) {
+            throw new Error(`${json.message}`);
+          }
 
           localStorage.token = json.token;
           $("form").removeClass("was-validated");
           $("form")[0].reset();
           alert("Registration successful!");
-        } catch {
-          alert("Registration failed!");
+        } catch (e) {
+          alert(e.message);
         }
       };
     </script>

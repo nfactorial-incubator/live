@@ -17,14 +17,14 @@
       class="d-flex flex-column min-vh-100 justify-content-center align-items-center"
       style="max-width: 700px"
     >
-      <form id="loginform">
+      <form>
         <div class="mb-3">
-          <label for="username" class="form-label">Username</label>
+          <label for="nickname" class="form-label">Nickname</label>
           <input
             type="text"
             class="form-control"
-            id="username"
-            placeholder="Seitov"
+            id="nickname"
+            placeholder="dalee"
           />
         </div>
         <div class="mb-3">
@@ -51,34 +51,37 @@
       crossorigin="anonymous"
     ></script>
     <script type="text/javascript">
-      $(document).ready(function () {
-        $("#loginform").submit(function (e) {
-          e.preventDefault();
-          const username = $("#username").val();
-          const password = $("#password").val();
-          if (username == "" || password == "") {
-            alert("All fields are required!");
-          } else {
-            $.ajax({
-              type: "POST",
-              url: "/auth/login",
-              data: {
-                username,
-                password,
-              },
-              success: function (data) {
-                localStorage.token = data.token;
-                $("form")[0].reset();
-                alert("Login successful!");
-                window.location = "index.html";
-              },
-              error: function () {
-                alert("Login failed");
-              },
-            });
-          }
-        });
+      $("form").submit((event) => {
+        event.preventDefault();
+        const nickname = $("#nickname").val();
+        const password = $("#password").val();
+        login({ nickname, password });
       });
+
+      const login = async (body) => {
+        try {
+          const response = await fetch("http://localhost:8080/auth/login", {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {
+              "Content-type": "application/json; charset=UTF-8",
+            },
+          });
+
+          const json = await response.json();
+
+          if (!response.ok) {
+            throw new Error(`${json.message}`);
+          }
+
+          localStorage.token = json.token;
+          $("form").removeClass("was-validated");
+          $("form")[0].reset();
+          alert("Login successful!");
+        } catch (e) {
+          alert(e.message);
+        }
+      };
     </script>
   </body>
 </html>

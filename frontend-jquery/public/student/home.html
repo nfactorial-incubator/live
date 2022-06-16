@@ -15,19 +15,9 @@
 
   <body>
     <div class="container">
-      <ul class="nav">
-        <li id="main" class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Main</a>
-        </li>
-        <li id="register" class="nav-item">
-          <a class="nav-link" href="register.html">Register</a>
-        </li>
-        <li id="login" class="nav-item">
-          <a class="nav-link" href="login.html">Login</a>
-        </li>
-      </ul>
-      <button id="logout">Logout</button>
-      <p id="authstatus">You are authorized!</p>
+      <h1 class="h-100 d-flex align-items-center justify-content-center">
+        Welcome, Student!
+      </h1>
     </div>
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -39,26 +29,6 @@
       integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
       crossorigin="anonymous"
     ></script>
-    <script type="text/javascript">
-      $(document).ready(() => {
-        setLayout();
-      });
-      $("#logout").click(() => {
-        localStorage.clear();
-        setLayout();
-      });
-
-      const setLayout = () => {
-        if (localStorage.token) {
-          $("#authstatus").show();
-          $("#logout").show();
-          $("#login").hide();
-        } else {
-          $("#authstatus").hide();
-          $("#login").show();
-          $("#logout").hide();
-        }
-      };
-    </script>
+    <script type="text/javascript"></script>
   </body>
 </html>

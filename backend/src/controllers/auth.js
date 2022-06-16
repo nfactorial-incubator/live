@@ -11,17 +11,19 @@ const register = async (req, res) => {
             req.body;
 
         if (!(firstname && lastname && nickname && password)) {
-            res.status(400).send('All input is required');
+            res.status(400).json({ message: 'All input is required' });
         }
 
         const oldUser = await User.findOne({ nickname });
 
         if (oldUser) {
-            return res.status(409).send('User Already Exist. Please Login');
+            return res
+                .status(409)
+                .json({ message: 'User Already Exist. Please Login' });
         }
 
         if (!(role === 'mentor' && secret === process.env.MENTOR_SECRET)) {
-            return res.status(401).json({ message: 'Invalid Mentor Secret!' });
+            return res.status(400).json({ message: 'Invalid Mentor Secret!' });
         }
 
         const encryptedUserPassword = await bcrypt.hash(password, 10);
@@ -54,7 +56,7 @@ const login = async (req, res) => {
         const { nickname, password } = req.body;
 
         if (!(nickname && password)) {
-            res.status(400).send('All input is required!');
+            res.status(400).json({ message: 'All input is required' });
         }
 
         const user = await User.findOne({ nickname });
@@ -71,7 +73,7 @@ const login = async (req, res) => {
 
             return res.status(200).json(user);
         }
-        return res.status(400).send('Invalid Credentials');
+        return res.status(400).json({ message: 'Invalid Credentials!' });
     } catch (err) {
         console.log(err);
     }
