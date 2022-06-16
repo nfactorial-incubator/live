@@ -14,7 +14,7 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css"
     />
     <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <title>nFactorial Live</title>
+    <title>Settings</title>
   </head>
 
   <body>
@@ -71,8 +71,10 @@
               aria-labelledby="dropdownUser1"
             >
               <li><a class="dropdown-item" href="#">New project...</a></li>
-              <li><a class="dropdown-item" href="#">Settings</a></li>
-              <li><a class="dropdown-item" href="/profile.html">Profile</a></li>
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li>
+                <a class="dropdown-item" href="/settings.html">Settings</a>
+              </li>
               <li><hr class="dropdown-divider" /></li>
               <li><a id="logout" class="dropdown-item" href="#">Logout</a></li>
             </ul>
@@ -84,8 +86,9 @@
       <div class="col-md-6 offset-md-3">
         <div class="row mt-5">
           <div class="col-md-12">
-            <h2>Your Profile</h2>
+            <h2>Settings</h2>
             <hr class="p-0" />
+            <div id="toast-container"></div>
           </div>
         </div>
         <div class="row">
@@ -134,7 +137,7 @@
                 </div>
                 <div class="mb-3">
                   <button
-                    id="register"
+                    id="update-profile"
                     type="submit"
                     class="btn btn-success mt-3"
                   >
@@ -177,6 +180,10 @@
       crossorigin="anonymous"
     ></script>
     <script type="text/javascript">
+      $(() => {
+        setFieldValues();
+      });
+
       $("#logout").on("click", () => {
         localStorage.clear();
         window.location = "/";
@@ -186,11 +193,65 @@
         $("#upload-input").click();
       });
 
+      $("#update-profile").click((e) => {
+        e.preventDefault();
+        const firstname = $("#firstname").val();
+        const lastname = $("#lastname").val();
+        const nickname = $("#nickname").val();
+        const password = $("#password").val();
+        updateProfile({ firstname, lastname, nickname, password });
+      });
+
+      const toastContainer = document.getElementById("toast-container");
+
+      const showToast = (message, type) => {
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = [
+          `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+          `   <div>${message}</div>`,
+          '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+          "</div>",
+        ].join("");
+
+        toastContainer.append(wrapper);
+      };
+
       $("#upload-input").on("change", (e) => {
         previewFile();
-        // const img = e.currentTarget.files[0];
-        // $("#profile-picture").attr("src");
       });
+
+      const setFieldValues = () => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        $("#firstname").val(user.firstname);
+        $("#lastname").val(user.lastname);
+        $("#nickname").val(user.nickname);
+      };
+
+      const updateProfile = async (body) => {
+        try {
+          const token = JSON.parse(localStorage.getItem("user")).token;
+          const response = await fetch("http://localhost:8080/api/user", {
+            method: "PUT",
+            body: JSON.stringify(body),
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-type": "application/json; charset=UTF-8",
+            },
+          });
+
+          const json = await response.json();
+
+          if (!response.ok) {
+            throw new Error(`${json.message}`);
+          }
+
+          localStorage.setItem("user", JSON.stringify(json));
+          setFieldValues();
+          showToast("Your profile has been updated successfully!", "success");
+        } catch (e) {
+          alert(e.message);
+        }
+      };
 
       const previewFile = () => {
         const preview = document.getElementById("profile-picture");
@@ -199,10 +260,8 @@
 
         reader.addEventListener(
           "load",
-          function () {
-            // convert image file to base64 string
+          () => {
             preview.src = reader.result;
-            console.log("result", reader.result);
           },
           false
         );

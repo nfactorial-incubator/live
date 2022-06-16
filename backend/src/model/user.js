@@ -14,4 +14,14 @@ const userSchema = new mongoose.Schema({
     raspberries: { type: Number, default: 0 }
 });
 
-module.exports = mongoose.model('user', userSchema);
+const toUserDTO = (model) => {
+    return {
+        firstname: model.firstname,
+        lastname: model.lastname,
+        nickname: model.nickname,
+        role: model.role,
+        token: model.token
+    };
+};
+
+module.exports = { User: mongoose.model('user', userSchema), toUserDTO };
