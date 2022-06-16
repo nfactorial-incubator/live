@@ -9,7 +9,7 @@
       integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
       crossorigin="anonymous"
     />
-    <title>Student Registration</title>
+    <title>Mentor Registration</title>
   </head>
 
   <body class="d-flex justify-content-center" style="background-color: #f5f5f5">
@@ -63,6 +63,16 @@
           />
         </div>
         <div class="mb-3">
+          <label for="secret" class="form-label">Secret</label>
+          <input
+            type="password"
+            class="form-control"
+            id="secret"
+            placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
+            required
+          />
+        </div>
+        <div class="mb-3">
           <button id="register" type="submit" class="btn btn-primary">
             Register
           </button>
@@ -98,7 +108,15 @@
                 const lastname = $("#lastname").val();
                 const nickname = $("#nickname").val();
                 const password = $("#password").val();
-                register({ firstname, lastname, nickname, password });
+                const secret = $("#secret").val();
+                register({
+                  firstname,
+                  lastname,
+                  nickname,
+                  password,
+                  secret,
+                  role: "mentor",
+                });
               }
             },
             false
@@ -122,10 +140,15 @@
             throw new Error(`${json.message}`);
           }
 
-          localStorage.token = json.token;
+          localStorage.user = json;
           $("form").removeClass("was-validated");
           $("form")[0].reset();
           alert("Registration successful!");
+          if (json.role === "student") {
+            window.location = "/student/home.html";
+          } else {
+            window.location = "/mentor/home.html";
+          }
         } catch (e) {
           alert(e.message);
         }

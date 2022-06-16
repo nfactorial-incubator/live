@@ -14,20 +14,37 @@
   </head>
 
   <body>
-    <div class="container">
-      <ul class="nav">
-        <li id="main" class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Main</a>
-        </li>
-        <li id="register" class="nav-item">
-          <a class="nav-link" href="register.html">Register</a>
-        </li>
-        <li id="login" class="nav-item">
-          <a class="nav-link" href="login.html">Login</a>
-        </li>
-      </ul>
-      <button id="logout">Logout</button>
-      <p id="authstatus">You are authorized!</p>
+    <div class="px-4 py-5 my-5 text-center">
+      <img
+        class="d-block mx-auto mb-4"
+        src="/assets/logo.png"
+        alt=""
+        width="72"
+        height="72"
+      />
+      <h1 class="display-5 fw-bold">nFactorial Incubator</h1>
+      <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">
+          Train 10,000 high-class software engineers and build software used by
+          millions around the globe.
+        </p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          <button
+            id="login"
+            type="button"
+            class="btn btn-primary btn-lg px-4 gap-3"
+          >
+            Login
+          </button>
+          <button
+            id="register"
+            type="button"
+            class="btn btn-outline-secondary btn-lg px-4"
+          >
+            Register
+          </button>
+        </div>
+      </div>
     </div>
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -40,25 +57,13 @@
       crossorigin="anonymous"
     ></script>
     <script type="text/javascript">
-      $(document).ready(() => {
-        setLayout();
-      });
-      $("#logout").click(() => {
-        localStorage.clear();
-        setLayout();
+      $("#login").on("click", () => {
+        window.location = "/login.html";
       });
 
-      const setLayout = () => {
-        if (localStorage.token) {
-          $("#authstatus").show();
-          $("#logout").show();
-          $("#login").hide();
-        } else {
-          $("#authstatus").hide();
-          $("#login").show();
-          $("#logout").hide();
-        }
-      };
+      $("#register").on("click", () => {
+        window.location = "/register.html";
+      });
     </script>
   </body>
 </html>

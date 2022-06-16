@@ -9,37 +9,47 @@
       integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
       crossorigin="anonymous"
     />
+
+    <link href="styles/login.css" rel="stylesheet" />
     <title>Login</title>
   </head>
-
-  <body class="d-flex justify-content-center" style="background-color: #f5f5f5">
-    <div
-      class="d-flex flex-column min-vh-100 justify-content-center align-items-center"
-      style="max-width: 700px"
-    >
+  <body class="text-center">
+    <main class="form-signin w-100 m-auto">
       <form>
-        <div class="mb-3">
-          <label for="nickname" class="form-label">Nickname</label>
+        <img
+          class="mb-4"
+          src="/assets/logo.png"
+          alt=""
+          width="72"
+          height="72"
+        />
+        <h1 class="h3 mb-3 fw-normal">Welcome!</h1>
+
+        <div class="form-floating">
           <input
             type="text"
             class="form-control"
             id="nickname"
-            placeholder="dalee"
+            placeholder="salvador-dali-da"
           />
+          <label for="floatingInput">Nickname</label>
         </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
+        <div class="form-floating">
           <input
             type="password"
             class="form-control"
-            name="password"
             id="password"
             placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
           />
+          <label for="floatingPassword">Password</label>
         </div>
-        <button id="login" type="submit" class="btn btn-primary">Login</button>
+
+        <button class="w-100 btn btn-lg btn-primary" type="submit">
+          Sign in
+        </button>
+        <p class="mt-5 mb-3 text-muted">© jQuery is amazing</p>
       </form>
-    </div>
+    </main>
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -55,6 +65,7 @@
         event.preventDefault();
         const nickname = $("#nickname").val();
         const password = $("#password").val();
+
         login({ nickname, password });
       });
 
@@ -73,11 +84,8 @@
           if (!response.ok) {
             throw new Error(`${json.message}`);
           }
-
-          localStorage.token = json.token;
-          $("form").removeClass("was-validated");
-          $("form")[0].reset();
-          alert("Login successful!");
+          localStorage.setItem("user", json);
+          window.location = "home.html";
         } catch (e) {
           alert(e.message);
         }

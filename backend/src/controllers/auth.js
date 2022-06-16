@@ -22,7 +22,7 @@ const register = async (req, res) => {
                 .json({ message: 'User Already Exist. Please Login' });
         }
 
-        if (!(role === 'mentor' && secret === process.env.MENTOR_SECRET)) {
+        if (role === 'mentor' && secret !== process.env.MENTOR_SECRET) {
             return res.status(400).json({ message: 'Invalid Mentor Secret!' });
         }
 
@@ -45,7 +45,14 @@ const register = async (req, res) => {
         );
 
         user.token = token;
-        res.status(201).json(user);
+
+        res.status(201).json({
+            firstname: user.firstname,
+            lastname: user.lastname,
+            nickname: user.nickname,
+            role: user.role,
+            token: user.token
+        });
     } catch (err) {
         console.log(err);
     }
@@ -71,9 +78,16 @@ const login = async (req, res) => {
             );
             user.token = token;
 
-            return res.status(200).json(user);
+            return res.status(200).json({
+                firstname: user.firstname,
+                lastname: user.lastname,
+                nickname: user.nickname,
+                role: user.role,
+                token: user.token
+            });
+        } else {
+            return res.status(400).json({ message: 'Invalid Credentials!' });
         }
-        return res.status(400).json({ message: 'Invalid Credentials!' });
     } catch (err) {
         console.log(err);
     }
