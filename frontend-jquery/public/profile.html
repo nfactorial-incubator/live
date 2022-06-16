@@ -9,6 +9,10 @@
       integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css"
+    />
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <title>nFactorial Live</title>
   </head>
@@ -76,6 +80,91 @@
         </div>
       </div>
     </header>
+    <div class="container">
+      <div class="col-md-6 offset-md-3">
+        <div class="row mt-5">
+          <div class="col-md-12">
+            <h2>Your Profile</h2>
+            <hr class="p-0" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-7">
+            <div>
+              <form class="needs-validation" novalidate>
+                <div class="mb-3">
+                  <label for="firstname" class="form-label">First Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="firstname"
+                    placeholder="Aruzhan"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="lastname" class="form-label">Last Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="lastname"
+                    placeholder="Zhaubassar"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="nickname" class="form-label">Nickname</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="nickname"
+                    placeholder="arooka-the-best"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <button
+                    id="register"
+                    type="submit"
+                    class="btn btn-success mt-3"
+                  >
+                    Update Profile
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <h6>Profile picture</h6>
+            <img
+              src="https://github.com/nugmanoff.png"
+              class="img-thumbnail rounded-circle"
+              width="200px"
+              height="200px"
+            />
+            <button
+              id="upload-button"
+              type="button"
+              class="btn btn-secondary"
+              style="margin-top: -50px"
+            >
+              <i class="bi bi-pencil"></i> Edit
+            </button>
+            <input id="upload-input" type="file" style="display: none" />
+          </div>
+        </div>
+      </div>
+    </div>
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -91,6 +180,15 @@
         localStorage.clear();
         window.location = "/";
       });
+
+      $("#upload-button").click(() => {
+        $("#upload-input").click();
+        console.log($("input[type=file]").val());
+      });
+
+      // $("#upload-input").click((e) => {
+      //   console.log(e);
+      // });
     </script>
   </body>
 </html>
