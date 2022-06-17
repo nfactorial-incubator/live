@@ -7,11 +7,19 @@ const controller = express.Router();
 
 const register = async (req, res) => {
     try {
-        const { firstname, lastname, nickname, password, role, secret } =
-            req.body;
+        const {
+            firstname,
+            lastname,
+            nickname,
+            password,
+            role,
+            secret,
+            avatar
+        } = req.body;
 
-        if (!(firstname && lastname && nickname && password)) {
-            res.status(400).json({ message: 'All input is required' });
+        if (!(firstname && lastname && nickname && password && avatar)) {
+            console.log(firstname, lastname, nickname, password, avatar);
+            return res.status(400).json({ message: 'All input is required' });
         }
 
         const oldUser = await User.findOne({ nickname });
@@ -27,6 +35,16 @@ const register = async (req, res) => {
         }
 
         const encryptedPassword = await bcrypt.hash(password, 10);
+        var avatarBuffer = new Buffer.from(avatar.split(',')[1], 'base64');
+
+        const user = await User.create({
+            firstname,
+            lastname,
+            nickname,
+            password: encryptedPassword,
+            role,
+            avatar: avatarBuffer
+        });
 
         const token = jwt.sign(
             { id: user._id, nickname, role },
@@ -36,16 +54,13 @@ const register = async (req, res) => {
             }
         );
 
-        const user = await User.create({
-            firstname,
-            lastname,
-            nickname,
-            password: encryptedPassword,
-            role,
-            token
-        });
+        const userWithToken = await User.findOneAndUpdate(
+            { id: user._id },
+            { token },
+            { new: true }
+        );
 
-        res.status(201).json(toUserDTO(user));
+        res.status(201).json(toUserDTO(userWithToken));
     } catch (err) {
         console.log(err);
     }

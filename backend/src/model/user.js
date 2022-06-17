@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
         default: 'student',
         enum: ['student', 'mentor']
     },
+    avatar: { type: Buffer, default: null },
     token: { type: String },
     raspberries: { type: Number, default: 0 }
 });

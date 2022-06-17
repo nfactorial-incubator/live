@@ -6,11 +6,13 @@ const controller = express.Router();
 
 const getUser = async (req, res) => {
     try {
-        const nickname = req.auth.nickname;
-        const user = await User.findOne({ nickname });
-
+        const id = req.auth.id;
+        const user = await User.findOne({ _id: id });
+        const base64Avatar = user.avatar.toString('base64');
         if (user) {
-            return res.status(201).json(toUserDTO(user));
+            return res
+                .status(201)
+                .json({ ...toUserDTO(user), avatar: base64Avatar });
         } else {
             return res.status(404).send({ message: 'User not found' });
         }

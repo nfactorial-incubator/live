@@ -151,7 +151,7 @@
             <h6>Profile picture</h6>
             <img
               id="profile-picture"
-              src="https://github.com/nugmanoff.png"
+              src=""
               class="img-thumbnail rounded-circle"
               width="200px"
               height="200px"
@@ -180,8 +180,13 @@
       crossorigin="anonymous"
     ></script>
     <script type="text/javascript">
-      $(() => {
+      const toastContainer = document.getElementById("toast-container");
+      const file = document.getElementById("upload-input").files[0];
+      const reader = new FileReader();
+
+      $(async () => {
         setFieldValues();
+        await getUserAvatar();
       });
 
       $("#logout").on("click", () => {
@@ -199,10 +204,14 @@
         const lastname = $("#lastname").val();
         const nickname = $("#nickname").val();
         const password = $("#password").val();
-        updateProfile({ firstname, lastname, nickname, password });
+        updateProfile({
+          firstname,
+          lastname,
+          nickname,
+          password,
+          ...(reader.result && { avatar: reader.result }),
+        });
       });
-
-      const toastContainer = document.getElementById("toast-container");
 
       const showToast = (message, type) => {
         const wrapper = document.createElement("div");
@@ -217,7 +226,7 @@
       };
 
       $("#upload-input").on("change", (e) => {
-        previewFile();
+        updateProfilePicturePreview();
       });
 
       const setFieldValues = () => {
@@ -225,6 +234,31 @@
         $("#firstname").val(user.firstname);
         $("#lastname").val(user.lastname);
         $("#nickname").val(user.nickname);
+      };
+
+      const getUserAvatar = async () => {
+        try {
+          const token = JSON.parse(localStorage.getItem("user")).token;
+          const response = await fetch("http://localhost:8080/api/user", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-type": "application/json; charset=UTF-8",
+            },
+          });
+
+          const json = await response.json();
+
+          if (!response.ok) {
+            throw new Error(`${json.message}`);
+          }
+
+          localStorage.setItem("user", JSON.stringify(json));
+          const preview = document.getElementById("profile-picture");
+          preview.src = "data:image/jpeg;base64," + json.avatar;
+        } catch (e) {
+          alert(e.message);
+        }
       };
 
       const updateProfile = async (body) => {
@@ -249,14 +283,12 @@
           setFieldValues();
           showToast("Your profile has been updated successfully!", "success");
         } catch (e) {
-          alert(e.message);
+          console.error("failed to fetch user avatar");
         }
       };
 
-      const previewFile = () => {
+      const updateProfilePicturePreview = () => {
         const preview = document.getElementById("profile-picture");
-        const file = document.getElementById("upload-input").files[0];
-        const reader = new FileReader();
 
         reader.addEventListener(
           "load",
