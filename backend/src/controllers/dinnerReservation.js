@@ -1,6 +1,6 @@
 const express = require('express');
 const DinnerReservation = require('../model/dinnerReservation');
-const User = require('../model/user')
+const { User } = require('../model/user')
 const mongoose = require('mongoose');
 
 const controller = express.Router();

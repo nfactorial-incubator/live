@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const { User } = require('./user.js').schema;
+const { UserSchema } = require('../model/user.js');
+
 
 
 
@@ -21,7 +22,7 @@ const dinnerReservationSchema = new mongoose.Schema({
         })
     },
     users: {
-        type: [User],
+        type: [UserSchema],
         default: []
     }
 })
