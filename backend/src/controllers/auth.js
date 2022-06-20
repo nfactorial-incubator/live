@@ -1,17 +1,25 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const User = require('../model/user.js');
+const { User, toUserDTO } = require('../model/user.js');
 const express = require('express');
 
 const controller = express.Router();
 
 const register = async (req, res) => {
     try {
-        const { firstname, lastname, nickname, password, role, secret } =
-            req.body;
+        const {
+            firstname,
+            lastname,
+            nickname,
+            password,
+            role,
+            secret,
+            avatar
+        } = req.body;
 
-        if (!(firstname && lastname && nickname && password)) {
-            res.status(400).json({ message: 'All input is required' });
+        if (!(firstname && lastname && nickname && password && avatar)) {
+            console.log(firstname, lastname, nickname, password, avatar);
+            return res.status(400).json({ message: 'All input is required' });
         }
 
         const oldUser = await User.findOne({ nickname });
@@ -26,14 +34,16 @@ const register = async (req, res) => {
             return res.status(400).json({ message: 'Invalid Mentor Secret!' });
         }
 
-        const encryptedUserPassword = await bcrypt.hash(password, 10);
+        const encryptedPassword = await bcrypt.hash(password, 10);
+        var avatarBuffer = new Buffer.from(avatar.split(',')[1], 'base64');
 
         const user = await User.create({
             firstname,
             lastname,
             nickname,
-            password: encryptedUserPassword,
-            role
+            password: encryptedPassword,
+            role,
+            avatar: avatarBuffer
         });
 
         const token = jwt.sign(
@@ -44,15 +54,13 @@ const register = async (req, res) => {
             }
         );
 
-        user.token = token;
+        const userWithToken = await User.findOneAndUpdate(
+            { id: user._id },
+            { token },
+            { new: true }
+        );
 
-        res.status(201).json({
-            firstname: user.firstname,
-            lastname: user.lastname,
-            nickname: user.nickname,
-            role: user.role,
-            token: user.token
-        });
+        res.status(201).json(toUserDTO(userWithToken));
     } catch (err) {
         console.log(err);
     }
@@ -68,6 +76,8 @@ const login = async (req, res) => {
 
         const user = await User.findOne({ nickname });
 
+        console.log('loginGetUser', user);
+
         if (user && (await bcrypt.compare(password, user.password))) {
             const token = jwt.sign(
                 { id: user._id, nickname, role: user.role },
@@ -76,15 +86,14 @@ const login = async (req, res) => {
                     expiresIn: 5 * 60 * 60
                 }
             );
-            user.token = token;
 
-            return res.status(200).json({
-                firstname: user.firstname,
-                lastname: user.lastname,
-                nickname: user.nickname,
-                role: user.role,
-                token: user.token
-            });
+            const updated = await User.findOneAndUpdate(
+                { _id: user._id },
+                { token },
+                { new: true }
+            );
+
+            return res.status(200).json(toUserDTO(updated));
         } else {
             return res.status(400).json({ message: 'Invalid Credentials!' });
         }

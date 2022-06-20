@@ -84,7 +84,7 @@
           if (!response.ok) {
             throw new Error(`${json.message}`);
           }
-          localStorage.setItem("user", json);
+          localStorage.setItem("user", JSON.stringify(json));
           window.location = "home.html";
         } catch (e) {
           alert(e.message);

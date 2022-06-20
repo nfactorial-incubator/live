@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <title>Settings</title>
+  </head>
+
+  <body>
+    <header class="p-3 mb-3 border-bottom bg-dark">
+      <div class="container">
+        <div
+          class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
+        >
+          <a
+            href="/home.html"
+            class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"
+          >
+            <img
+              class="bi me-2"
+              src="/assets/logo.png"
+              alt=""
+              width="40"
+              height="40"
+            />
+            <span class="fs-4 text-white">nFactorial Incubator</span>
+          </a>
+
+          <ul
+            class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
+          >
+            <li>
+              <a href="#" class="nav-link px-2 link-light">Lunch</a>
+            </li>
+            <li>
+              <a href="#" class="nav-link px-2 link-light">Leaderboard</a>
+            </li>
+            <li><a href="#" class="nav-link px-2 link-light">Check-in</a></li>
+            <li><a href="#" class="nav-link px-2 link-light">Testflight</a></li>
+          </ul>
+
+          <div class="dropdown text-end">
+            <a
+              href="#"
+              class="d-block link-light text-decoration-none dropdown-toggle"
+              id="dropdownUser1"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img
+                src="https://github.com/nugmanoff.png"
+                alt="mdo"
+                width="32"
+                height="32"
+                class="rounded-circle"
+              />
+            </a>
+            <ul
+              class="dropdown-menu text-small"
+              aria-labelledby="dropdownUser1"
+            >
+              <li><a class="dropdown-item" href="#">New project...</a></li>
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li>
+                <a class="dropdown-item" href="/settings.html">Settings</a>
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li><a id="logout" class="dropdown-item" href="#">Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="container">
+      <div class="col-md-6 offset-md-3">
+        <div class="row mt-5">
+          <div class="col-md-12">
+            <h2>Settings</h2>
+            <hr class="p-0" />
+            <div id="toast-container"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-7">
+            <div>
+              <form class="needs-validation" novalidate>
+                <div class="mb-3">
+                  <label for="firstname" class="form-label">First Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="firstname"
+                    placeholder="Aruzhan"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="lastname" class="form-label">Last Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="lastname"
+                    placeholder="Zhaubassar"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="nickname" class="form-label">Nickname</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="nickname"
+                    placeholder="arooka-the-best"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <button
+                    id="update-profile"
+                    type="submit"
+                    class="btn btn-success mt-3"
+                  >
+                    Update Profile
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <h6>Profile picture</h6>
+            <img
+              id="profile-picture"
+              src=""
+              class="img-thumbnail rounded-circle"
+              width="200px"
+              height="200px"
+            />
+            <button
+              id="upload-button"
+              type="button"
+              class="btn btn-secondary"
+              style="margin-top: -50px"
+            >
+              <i class="bi bi-pencil"></i> Edit
+            </button>
+            <input id="upload-input" type="file" style="display: none" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
+    <script type="text/javascript">
+      const toastContainer = document.getElementById("toast-container");
+      const file = document.getElementById("upload-input").files[0];
+      const reader = new FileReader();
+
+      $(async () => {
+        setFieldValues();
+        await getUserAvatar();
+      });
+
+      $("#logout").on("click", () => {
+        localStorage.clear();
+        window.location = "/";
+      });
+
+      $("#upload-button").click(() => {
+        $("#upload-input").click();
+      });
+
+      $("#update-profile").click((e) => {
+        e.preventDefault();
+        const firstname = $("#firstname").val();
+        const lastname = $("#lastname").val();
+        const nickname = $("#nickname").val();
+        const password = $("#password").val();
+        updateProfile({
+          firstname,
+          lastname,
+          nickname,
+          password,
+          ...(reader.result && { avatar: reader.result }),
+        });
+      });
+
+      const showToast = (message, type) => {
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = [
+          `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+          `   <div>${message}</div>`,
+          '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+          "</div>",
+        ].join("");
+
+        toastContainer.append(wrapper);
+      };
+
+      $("#upload-input").on("change", (e) => {
+        updateProfilePicturePreview();
+      });
+
+      const setFieldValues = () => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        $("#firstname").val(user.firstname);
+        $("#lastname").val(user.lastname);
+        $("#nickname").val(user.nickname);
+      };
+
+      const getUserAvatar = async () => {
+        try {
+          const token = JSON.parse(localStorage.getItem("user")).token;
+          const response = await fetch("http://localhost:8080/api/user", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-type": "application/json; charset=UTF-8",
+            },
+          });
+
+          const json = await response.json();
+
+          if (!response.ok) {
+            throw new Error(`${json.message}`);
+          }
+
+          localStorage.setItem("user", JSON.stringify(json));
+          const preview = document.getElementById("profile-picture");
+          preview.src = "data:image/jpeg;base64," + json.avatar;
+        } catch (e) {
+          alert(e.message);
+        }
+      };
+
+      const updateProfile = async (body) => {
+        try {
+          const token = JSON.parse(localStorage.getItem("user")).token;
+          const response = await fetch("http://localhost:8080/api/user", {
+            method: "PUT",
+            body: JSON.stringify(body),
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-type": "application/json; charset=UTF-8",
+            },
+          });
+
+          const json = await response.json();
+
+          if (!response.ok) {
+            throw new Error(`${json.message}`);
+          }
+
+          localStorage.setItem("user", JSON.stringify(json));
+          setFieldValues();
+          showToast("Your profile has been updated successfully!", "success");
+        } catch (e) {
+          console.error("failed to fetch user avatar");
+        }
+      };
+
+      const updateProfilePicturePreview = () => {
+        const preview = document.getElementById("profile-picture");
+
+        reader.addEventListener(
+          "load",
+          () => {
+            preview.src = reader.result;
+          },
+          false
+        );
+
+        if (file) {
+          reader.readAsDataURL(file);
+        }
+      };
+    </script>
+  </body>
+</html>
