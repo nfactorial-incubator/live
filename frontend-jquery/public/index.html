@@ -14,38 +14,7 @@
   </head>
 
   <body>
-    <div class="px-4 py-5 my-5 text-center">
-      <img
-        class="d-block mx-auto mb-4"
-        src="/assets/logo.png"
-        alt=""
-        width="72"
-        height="72"
-      />
-      <h1 class="display-5 fw-bold">nFactorial Incubator</h1>
-      <div class="col-lg-6 mx-auto">
-        <p class="lead mb-4">
-          Train 10,000 high-class software engineers and build software used by
-          millions around the globe.
-        </p>
-        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-          <button
-            id="login"
-            type="button"
-            class="btn btn-primary btn-lg px-4 gap-3"
-          >
-            Login
-          </button>
-          <button
-            id="register"
-            type="button"
-            class="btn btn-outline-secondary btn-lg px-4"
-          >
-            Register
-          </button>
-        </div>
-      </div>
-    </div>
+    <div id="content"></div>
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -56,14 +25,7 @@
       integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
       crossorigin="anonymous"
     ></script>
-    <script type="text/javascript">
-      $("#login").on("click", () => {
-        window.location = "/login.html";
-      });
-
-      $("#register").on("click", () => {
-        window.location = "/register.html";
-      });
-    </script>
+    <script src="//unpkg.com/navigo"></script>
+    <script src="./js/router.js"></script>
   </body>
 </html>
