@@ -25,4 +25,4 @@ const toUserDTO = (model) => {
     };
 };
 
-module.exports = { User: mongoose.model('user', userSchema), toUserDTO };
+module.exports = { User: mongoose.model('user', userSchema), toUserDTO, UserSchema: userSchema};

@@ -73,6 +73,7 @@ const login = async (req, res) => {
         if (!(nickname && password)) {
             res.status(400).json({ message: 'All input is required' });
         }
+        console.log('log', "s");
 
         const user = await User.findOne({ nickname });
 
