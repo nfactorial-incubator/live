@@ -15,7 +15,7 @@
   </head>
   <body>
     <main class="root w-100 m-auto">
-      <form class="form-signin">
+      <form id="login-form" class="form-signin">
         <img
           class="mb-4"
           src="/assets/logo.png"
@@ -60,36 +60,5 @@
       integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
       crossorigin="anonymous"
     ></script>
-    <script type="text/javascript">
-      $("form").submit((event) => {
-        event.preventDefault();
-        const nickname = $("#nickname").val();
-        const password = $("#password").val();
-
-        login({ nickname, password });
-      });
-
-      const login = async (body) => {
-        try {
-          const response = await fetch("http://localhost:8080/auth/login", {
-            method: "POST",
-            body: JSON.stringify(body),
-            headers: {
-              "Content-type": "application/json; charset=UTF-8",
-            },
-          });
-
-          const json = await response.json();
-
-          if (!response.ok) {
-            throw new Error(`${json.message}`);
-          }
-          localStorage.setItem("user", JSON.stringify(json));
-          window.location = "home.html";
-        } catch (e) {
-          alert(e.message);
-        }
-      };
-    </script>
   </body>
 </html>

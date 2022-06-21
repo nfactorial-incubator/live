@@ -6,8 +6,8 @@ const render = (page) => {
       return response.text();
     })
     .then((html) => {
-      // document.querySelector("#content").innerHTML = html;
-      document.body.innerHTML = html;
+      document.querySelector("#content").innerHTML = html;
+      // document.body.innerHTML = html;
     });
 };
 

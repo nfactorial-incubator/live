@@ -17,7 +17,7 @@
     <div
       class="d-flex flex-column justify-content-center align-items-center root"
     >
-      <form class="needs-validation" novalidate>
+      <form id="register-form" class="needs-validation" novalidate>
         <div class="mb-3">
           <label for="firstname" class="form-label">First Name</label>
           <input
@@ -90,68 +90,5 @@
       integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
       crossorigin="anonymous"
     ></script>
-    <!-- <script src="js/upload-avatar.js"></script> -->
-    <script type="text/javascript">
-      (() => {
-        const forms = document.querySelectorAll(".needs-validation");
-
-        Array.from(forms).forEach((form) => {
-          form.addEventListener(
-            "submit",
-            (event) => {
-              if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-                form.classList.add("was-validated");
-              } else {
-                event.preventDefault();
-                onFormSubmitted();
-              }
-            },
-            false
-          );
-        });
-      })();
-
-      const onFormSubmitted = () => {
-        const firstname = $("#firstname").val();
-        const lastname = $("#lastname").val();
-        const nickname = $("#nickname").val();
-        const password = $("#password").val();
-        register({
-          firstname,
-          lastname,
-          nickname,
-          password,
-          role: "student",
-          // ...(reader.result && { avatar: reader.result }),
-        });
-      };
-
-      const register = async (body) => {
-        try {
-          const response = await fetch("http://localhost:8080/auth/register", {
-            method: "POST",
-            body: JSON.stringify(body),
-            headers: {
-              "Content-type": "application/json; charset=UTF-8",
-            },
-          });
-
-          const json = await response.json();
-
-          if (!response.ok) {
-            throw new Error(`${json.message}`);
-          }
-
-          localStorage.setItem("user", JSON.stringify(json));
-          $("form").removeClass("was-validated");
-          $("form")[0].reset();
-          window.location = "home.html";
-        } catch (e) {
-          alert(e.message);
-        }
-      };
-    </script>
   </body>
 </html>
