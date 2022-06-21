@@ -7,18 +7,10 @@ const controller = express.Router();
 
 const register = async (req, res) => {
     try {
-        const {
-            firstname,
-            lastname,
-            nickname,
-            password,
-            role,
-            secret,
-            avatar
-        } = req.body;
+        const { firstname, lastname, nickname, password, role, secret } =
+            req.body;
 
-        if (!(firstname && lastname && nickname && password && avatar)) {
-            console.log(firstname, lastname, nickname, password, avatar);
+        if (!(firstname && lastname && nickname && password)) {
             return res.status(400).json({ message: 'All input is required' });
         }
 
@@ -35,15 +27,13 @@ const register = async (req, res) => {
         }
 
         const encryptedPassword = await bcrypt.hash(password, 10);
-        var avatarBuffer = new Buffer.from(avatar.split(',')[1], 'base64');
 
         const user = await User.create({
             firstname,
             lastname,
             nickname,
             password: encryptedPassword,
-            role,
-            avatar: avatarBuffer
+            role
         });
 
         const token = jwt.sign(
@@ -54,11 +44,14 @@ const register = async (req, res) => {
             }
         );
 
-        const userWithToken = await User.findOneAndUpdate(
-            { id: user._id },
+        const userWithToken = await User.findByIdAndUpdate(
+            user._id,
             { token },
             { new: true }
         );
+
+        console.log('userWithToken', userWithToken);
+
         res.status(201).json(toUserDTO(userWithToken));
     } catch (err) {
         console.log(err);
@@ -72,11 +65,8 @@ const login = async (req, res) => {
         if (!(nickname && password)) {
             res.status(400).json({ message: 'All input is required' });
         }
-        console.log('log', "s");
 
         const user = await User.findOne({ nickname });
-
-        console.log('loginGetUser', user);
 
         if (user && (await bcrypt.compare(password, user.password))) {
             const token = jwt.sign(
@@ -87,8 +77,8 @@ const login = async (req, res) => {
                 }
             );
 
-            const updated = await User.findOneAndUpdate(
-                { _id: user._id },
+            const updated = await User.findByIdAndUpdate(
+                user._id,
                 { token },
                 { new: true }
             );

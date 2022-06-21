@@ -48,7 +48,7 @@
             required
           />
         </div>
-        <div class="mb-3">
+        <!-- <div class="mb-3">
           <label for="avatar-upload-input" class="form-label">Avatar</label>
           <input type="file" class="form-control" id="avatar-upload-input" />
           <img
@@ -58,7 +58,7 @@
             width="200px"
             height="200px"
           />
-        </div>
+        </div> -->
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
           <input
@@ -86,7 +86,7 @@
       integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
       crossorigin="anonymous"
     ></script>
-    <script src="js/upload-avatar.js"></script>
+    <!-- <script src="js/upload-avatar.js"></script> -->
     <script type="text/javascript">
       (() => {
         const forms = document.querySelectorAll(".needs-validation");
@@ -114,24 +114,14 @@
         const lastname = $("#lastname").val();
         const nickname = $("#nickname").val();
         const password = $("#password").val();
-        console.log("avatar-data", getAvatarData());
-        // const obj = {
-        //   firstname,
-        //   lastname,
-        //   nickname,
-        //   password,
-        //   role: "student",
-        //   ...(reader.result && { avatar: reader.result }),
-        // };
-
-        // register({
-        //   firstname,
-        //   lastname,
-        //   nickname,
-        //   password,
-        //   role: "student",
-        //   ...(reader.result && { avatar: reader.result }),
-        // });
+        register({
+          firstname,
+          lastname,
+          nickname,
+          password,
+          role: "student",
+          // ...(reader.result && { avatar: reader.result }),
+        });
       };
 
       const register = async (body) => {

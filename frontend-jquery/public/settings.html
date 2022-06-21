@@ -49,22 +49,15 @@
             <li><a href="#" class="nav-link px-2 link-light">Check-in</a></li>
             <li><a href="#" class="nav-link px-2 link-light">Testflight</a></li>
           </ul>
-
-          <div class="dropdown text-end">
+          <div class="dropdown">
             <a
+              class="btn btn-light dropdown-toggle"
               href="#"
-              class="d-block link-light text-decoration-none dropdown-toggle"
-              id="dropdownUser1"
+              id="profile-dropdown"
+              role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <img
-                src="https://github.com/nugmanoff.png"
-                alt="mdo"
-                width="32"
-                height="32"
-                class="rounded-circle"
-              />
             </a>
             <ul
               class="dropdown-menu text-small"
@@ -85,7 +78,7 @@
     <div class="container">
       <div class="col-md-6 offset-md-3">
         <div class="row mt-5">
-          <div class="col-md-12">
+          <div class="col-md-7">
             <h2>Settings</h2>
             <hr class="p-0" />
             <div id="toast-container"></div>
@@ -147,25 +140,6 @@
               </form>
             </div>
           </div>
-          <div class="col-md-5">
-            <h6>Profile picture</h6>
-            <img
-              id="profile-picture"
-              src=""
-              class="img-thumbnail rounded-circle"
-              width="200px"
-              height="200px"
-            />
-            <button
-              id="upload-button"
-              type="button"
-              class="btn btn-secondary"
-              style="margin-top: -50px"
-            >
-              <i class="bi bi-pencil"></i> Edit
-            </button>
-            <input id="upload-input" type="file" style="display: none" />
-          </div>
         </div>
       </div>
     </div>
@@ -181,21 +155,14 @@
     ></script>
     <script type="text/javascript">
       const toastContainer = document.getElementById("toast-container");
-      const file = document.getElementById("upload-input").files[0];
-      const reader = new FileReader();
 
       $(async () => {
         setFieldValues();
-        await getUserAvatar();
       });
 
       $("#logout").on("click", () => {
         localStorage.clear();
         window.location = "/";
-      });
-
-      $("#upload-button").click(() => {
-        $("#upload-input").click();
       });
 
       $("#update-profile").click((e) => {
@@ -209,7 +176,6 @@
           lastname,
           nickname,
           password,
-          ...(reader.result && { avatar: reader.result }),
         });
       });
 
@@ -225,42 +191,12 @@
         toastContainer.append(wrapper);
       };
 
-      $("#upload-input").on("change", (e) => {
-        updateProfilePicturePreview();
-      });
-
       const setFieldValues = () => {
         const user = JSON.parse(localStorage.getItem("user"));
         $("#firstname").val(user.firstname);
         $("#lastname").val(user.lastname);
         $("#nickname").val(user.nickname);
-      };
-
-      const getUserAvatar = async () => {
-        try {
-          const token = JSON.parse(localStorage.getItem("user")).token;
-          const response = await fetch("http://localhost:8080/api/user", {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-type": "application/json; charset=UTF-8",
-            },
-          });
-
-          const json = await response.json();
-
-          if (!response.ok) {
-            throw new Error(`${json.message}`);
-          }
-
-          const user = JSON.parse(localStorage.getItem("user"));
-          user.avatar = json.avatar;
-          localStorage.setItem("user", JSON.stringify(user));
-          const preview = document.getElementById("profile-picture");
-          preview.src = "data:image/jpeg;base64," + json.avatar;
-        } catch (e) {
-          alert(e.message);
-        }
+        $("#profile-dropdown").text(user.nickname);
       };
 
       const updateProfile = async (body) => {
@@ -286,22 +222,6 @@
           showToast("Your profile has been updated successfully!", "success");
         } catch (e) {
           console.error("failed to fetch user avatar");
-        }
-      };
-
-      const updateProfilePicturePreview = () => {
-        const preview = document.getElementById("profile-picture");
-
-        reader.addEventListener(
-          "load",
-          () => {
-            preview.src = reader.result;
-          },
-          false
-        );
-
-        if (file) {
-          reader.readAsDataURL(file);
         }
       };
     </script>
