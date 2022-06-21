@@ -253,7 +253,9 @@
             throw new Error(`${json.message}`);
           }
 
-          localStorage.setItem("user", JSON.stringify(json));
+          const user = JSON.parse(localStorage.getItem("user"));
+          user.avatar = json.avatar;
+          localStorage.setItem("user", JSON.stringify(user));
           const preview = document.getElementById("profile-picture");
           preview.src = "data:image/jpeg;base64," + json.avatar;
         } catch (e) {

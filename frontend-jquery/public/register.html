@@ -49,8 +49,8 @@
           />
         </div>
         <div class="mb-3">
-          <label for="avatar-upload" class="form-label">Avatar</label>
-          <input type="file" class="form-control" id="avatar-upload" />
+          <label for="avatar-upload-input" class="form-label">Avatar</label>
+          <input type="file" class="form-control" id="avatar-upload-input" />
           <img
             id="avatar-preview"
             src=""
@@ -86,9 +86,9 @@
       integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
       crossorigin="anonymous"
     ></script>
+    <script src="js/upload-avatar.js"></script>
     <script type="text/javascript">
       (() => {
-        "use strict";
         const forms = document.querySelectorAll(".needs-validation");
 
         Array.from(forms).forEach((form) => {
@@ -101,23 +101,38 @@
                 form.classList.add("was-validated");
               } else {
                 event.preventDefault();
-                const firstname = $("#firstname").val();
-                const lastname = $("#lastname").val();
-                const nickname = $("#nickname").val();
-                const password = $("#password").val();
-                register({
-                  firstname,
-                  lastname,
-                  nickname,
-                  password,
-                  role: "student",
-                });
+                onFormSubmitted();
               }
             },
             false
           );
         });
       })();
+
+      const onFormSubmitted = () => {
+        const firstname = $("#firstname").val();
+        const lastname = $("#lastname").val();
+        const nickname = $("#nickname").val();
+        const password = $("#password").val();
+        console.log("avatar-data", getAvatarData());
+        // const obj = {
+        //   firstname,
+        //   lastname,
+        //   nickname,
+        //   password,
+        //   role: "student",
+        //   ...(reader.result && { avatar: reader.result }),
+        // };
+
+        // register({
+        //   firstname,
+        //   lastname,
+        //   nickname,
+        //   password,
+        //   role: "student",
+        //   ...(reader.result && { avatar: reader.result }),
+        // });
+      };
 
       const register = async (body) => {
         try {
@@ -135,35 +150,12 @@
             throw new Error(`${json.message}`);
           }
 
-          localStorage.user = json;
+          localStorage.setItem("user", JSON.stringify(json));
           $("form").removeClass("was-validated");
           $("form")[0].reset();
           window.location = "home.html";
         } catch (e) {
           alert(e.message);
-        }
-      };
-
-      $("#avatar-upload").on("change", (e) => {
-        updateProfilePicturePreview();
-      });
-
-      const updateProfilePicturePreview = () => {
-        const preview = document.getElementById("avatar-preview");
-        const file = document.getElementById("avatar-upload").files[0];
-        const reader = new FileReader();
-
-        reader.addEventListener(
-          "load",
-          () => {
-            preview.src = reader.result;
-            console.log("result", reader.result);
-          },
-          false
-        );
-
-        if (file) {
-          reader.readAsDataURL(file);
         }
       };
     </script>

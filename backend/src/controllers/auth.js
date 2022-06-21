@@ -59,7 +59,6 @@ const register = async (req, res) => {
             { token },
             { new: true }
         );
-
         res.status(201).json(toUserDTO(userWithToken));
     } catch (err) {
         console.log(err);

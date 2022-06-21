@@ -11,6 +11,7 @@ const authController = require('./controllers/auth.js');
 const userController = require('./controllers/user.js');
 const dinnerReservationController = require('./controllers/dinnerReservation.js');
 
+const morgan = require('morgan');
 const app = express();
 
 // middleware
@@ -36,6 +37,8 @@ var corsOptions = {
         'Accept'
     ]
 };
+
+app.use(morgan('tiny'));
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ limit: '50mb' }));
