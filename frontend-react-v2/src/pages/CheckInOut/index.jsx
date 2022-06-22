@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { api } from "../../services/api";
 
@@ -7,6 +8,7 @@ export const CheckInOut = () => {
 
   useEffect(() => {
     getLastCheck();
+    checkIfInSatbayevUniversity();
   }, []);
 
   useEffect(() => {
@@ -21,6 +23,14 @@ export const CheckInOut = () => {
     }
   }, [lastCheck]);
 
+  const checkIfInSatbayevUniversity = async () => {
+    const {
+      data: { IPv4: ip },
+    } = await axios.get("https://geolocation-db.com/json/");
+    return true;
+    return ip === "92.46.104.247";
+  };
+
   const getLastCheck = async () => {
     try {
       const response = await api.get("/api/check/last");
@@ -32,6 +42,11 @@ export const CheckInOut = () => {
 
   const onCheckIn = async () => {
     try {
+      const isInSatbayevUniversity = await checkIfInSatbayevUniversity();
+      if (!isInSatbayevUniversity) {
+        alert("Чекинится можно только из универа!");
+        return;
+      }
       const response = await api.post("/api/check/in");
       setLastCheck(response.data);
     } catch (error) {
@@ -41,6 +56,11 @@ export const CheckInOut = () => {
 
   const onCheckOut = async () => {
     try {
+      const isInSatbayevUniversity = await checkIfInSatbayevUniversity();
+      if (!isInSatbayevUniversity) {
+        alert("Чекаутится можно только из универа!");
+        return;
+      }
       const response = await api.post("/api/check/out");
       setLastCheck(response.data);
     } catch (error) {
