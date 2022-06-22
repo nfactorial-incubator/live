@@ -9,6 +9,7 @@ const ideaSubmissionController = require('./controllers/ideaSubmission.js');
 const dashboardController = require('./controllers/dashboard.js');
 const authController = require('./controllers/auth.js');
 const userController = require('./controllers/user.js');
+const checkController = require('./controllers/check.js');
 const dinnerReservationController = require('./controllers/dinnerReservation.js');
 
 const morgan = require('morgan');
@@ -51,6 +52,7 @@ app.use('/api/hw/assignment', hwAssignmentController);
 app.use('/api/hw/submission', hwSubmissionController);
 app.use('/api/idea/submission', ideaSubmissionController);
 app.use('/api/user', userController);
+app.use('/api/check', checkController);
 app.use('/api/dinner/reservation', dinnerReservationController);
 
 module.exports = app;

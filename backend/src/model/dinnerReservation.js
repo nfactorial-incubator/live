@@ -1,13 +1,11 @@
 const mongoose = require('mongoose');
 const { UserSchema } = require('../model/user.js');
 
-
-
-
 const dinnerReservationSchema = new mongoose.Schema({
     placeName: {
         type: String,
-        required: true},
+        required: true
+    },
     info: {
         type: Map,
         of: new mongoose.Schema({
@@ -25,6 +23,6 @@ const dinnerReservationSchema = new mongoose.Schema({
         type: [UserSchema],
         default: []
     }
-})
+});
 
-module.exports = mongoose.model('dinnerReservation', dinnerReservationSchema)
+module.exports = mongoose.model('dinnerReservation', dinnerReservationSchema);

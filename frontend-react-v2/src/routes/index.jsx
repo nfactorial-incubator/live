@@ -6,6 +6,7 @@
  * https://reactrouter.com/docs/en/v6/upgrading/v5
  */
 import { Routes, Route } from "react-router-dom";
+import { CheckInOut } from "../pages/CheckInOut";
 
 import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
@@ -41,6 +42,15 @@ export const RouteList = () => (
         <PublicRoute>
           <Register />
         </PublicRoute>
+      }
+    />
+
+    <Route
+      path="/check-in-out"
+      element={
+        <PrivateRoute redirectTo="/login">
+          <CheckInOut />
+        </PrivateRoute>
       }
     />
 

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Check = require('./check.js');
 
 const userSchema = new mongoose.Schema({
     firstname: { type: String, default: null, required: true },
@@ -12,7 +13,11 @@ const userSchema = new mongoose.Schema({
     },
     avatar: { type: Buffer, default: null },
     token: { type: String },
-    raspberries: { type: Number, default: 0 }
+    raspberries: { type: Number, default: 0 },
+    checks: {
+        type: [Check],
+        default: []
+    }
 });
 
 const toUserDTO = (model) => {
@@ -21,8 +26,13 @@ const toUserDTO = (model) => {
         lastname: model.lastname,
         nickname: model.nickname,
         role: model.role,
-        token: model.token
+        token: model.token,
+        checks: model.checks
     };
 };
 
-module.exports = { User: mongoose.model('user', userSchema), toUserDTO, UserSchema: userSchema};
+module.exports = {
+    User: mongoose.model('user', userSchema),
+    toUserDTO,
+    UserSchema: userSchema
+};
