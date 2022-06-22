@@ -3,15 +3,19 @@ import { Link } from "react-router-dom";
 
 import { AuthContext } from "../../context/AuthContext";
 import { CanAccess } from "../CanAccess";
+import { IsAuth } from "../IsAuth";
 
 export function NavBar() {
-  const { isAuthenticated, user, signOut } = useContext(AuthContext);
+  const { user, signOut } = useContext(AuthContext);
 
   return (
-    <div>
+    <div style={{ display: "flex", justifyContent: "space-around" }}>
       <Link to="/login">Login</Link>
       <Link to="/register">Register</Link>
-      <Link to="/">Home</Link>
+
+      <IsAuth>
+        <Link to="/">Home</Link>
+      </IsAuth>
 
       <CanAccess permissions={["users.list"]}>
         <Link to="/users">Users</Link>
@@ -21,14 +25,14 @@ export function NavBar() {
         <Link to="/metrics">Metrics</Link>
       </CanAccess>
 
-      {isAuthenticated && (
+      <IsAuth>
         <>
-          <span>{user?.nickname}</span>
+          <span>Welcome, {user?.nickname}!</span>
           <button data-testid="logout-button" onClick={() => signOut()}>
             Logout
           </button>
         </>
-      )}
+      </IsAuth>
     </div>
   );
 }

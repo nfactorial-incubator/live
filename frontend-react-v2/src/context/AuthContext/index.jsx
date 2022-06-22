@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
       setAuthorizationHeader(api.defaults, token);
     } catch (error) {
       const err = error;
-      return err;
+      throw err;
     }
   };
 
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
       setAuthorizationHeader(api.defaults, token);
     } catch (error) {
       const err = error;
-      return err;
+      throw err;
     }
   };
 

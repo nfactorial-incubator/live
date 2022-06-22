@@ -25,12 +25,15 @@ export const Login = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
-    setLoginRequestStatus("loading");
-
-    await signIn(values);
-
-    setLoginRequestStatus("success");
+    try {
+      setLoginRequestStatus("loading");
+      await signIn(values);
+      setLoginRequestStatus("success");
+    } catch (error) {
+      alert(error);
+      setLoginRequestStatus("success");
+      setValues(initialFormValues);
+    }
   }
 
   useEffect(() => {
