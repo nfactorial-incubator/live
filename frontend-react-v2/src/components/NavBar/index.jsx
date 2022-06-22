@@ -21,12 +21,16 @@ export function NavBar() {
         <Link to="/check-in-out">CheckInOut</Link>
       </IsAuth>
 
+      <IsAuth>
+        <Link to="/events">Events</Link>
+      </IsAuth>
+
+      <IsAuth>
+        <Link to="/profile">Profile</Link>
+      </IsAuth>
+
       <CanAccess permissions={["users.list"]}>
         <Link to="/users">Users</Link>
-      </CanAccess>
-
-      <CanAccess permissions={["metrics.list"]}>
-        <Link to="/metrics">Metrics</Link>
       </CanAccess>
 
       <IsAuth>

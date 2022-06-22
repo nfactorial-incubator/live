@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { api } from "../../services/api";
 
 export const CheckInOut = () => {
@@ -71,8 +71,8 @@ export const CheckInOut = () => {
   return (
     <div>
       <h1>Check In / Check Out</h1>
-      <p>Current status: {status}</p>
-      {!lastCheck && <p>Loading...</p>}
+      {status && <p>Current status: {status}</p>}
+      {!lastCheck && <button onClick={onCheckIn}>Check In</button>}
       {lastCheck && lastCheck.type === "out" && (
         <button onClick={onCheckIn}>Check In</button>
       )}

@@ -7,10 +7,11 @@
  */
 import { Routes, Route } from "react-router-dom";
 import { CheckInOut } from "../pages/CheckInOut";
+import { Events } from "../pages/Events";
 
 import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
-import { Metrics } from "../pages/Metrics";
+import { Profile } from "../pages/Profile";
 import { Register } from "../pages/Register";
 import { Users } from "../pages/Users";
 import { PrivateRoute } from "./PrivateRoute.jsx";
@@ -55,10 +56,28 @@ export const RouteList = () => (
     />
 
     <Route
-      path="/metrics"
+      path="/events"
       element={
-        <PrivateRoute permissions={["metrics.list"]} redirectTo="/login">
-          <Metrics />
+        <PrivateRoute redirectTo="/login">
+          <Events />
+        </PrivateRoute>
+      }
+    />
+
+    <Route
+      path="/events/blind-pp"
+      element={
+        <PrivateRoute redirectTo="/login">
+          <h1>Blind Pair Programming Event</h1>
+        </PrivateRoute>
+      }
+    />
+
+    <Route
+      path="/profile"
+      element={
+        <PrivateRoute redirectTo="/login">
+          <Profile />
         </PrivateRoute>
       }
     />
