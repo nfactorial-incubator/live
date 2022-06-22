@@ -1,81 +1,102 @@
-import { createContext, useEffect, useState } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { createContext, useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
-import { api } from '../../services/api'
-import { setAuthorizationHeader } from '../../services/interceptors'
-import { createTokenCookies, getToken, removeTokenCookies } from '../../utils/tokenCookies'
+import { api } from "../../services/api";
+import { setAuthorizationHeader } from "../../services/interceptors";
+import {
+  createTokenCookies,
+  getToken,
+  removeTokenCookies,
+} from "../../utils/tokenCookies";
 
-export const AuthContext = createContext({})
+export const AuthContext = createContext({});
 
-export function AuthProvider ({ children }) {
-  const [user, setUser] = useState({})
-  const [loadingUserData, setLoadingUserData] = useState(true)
-  const navigate = useNavigate()
-  const { pathname } = useLocation()
-  const token = getToken()
-  const isAuthenticated = Boolean(token)
-  const userData = user 
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState({});
+  const [loadingUserData, setLoadingUserData] = useState(false);
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const token = getToken();
+  const isAuthenticated = Boolean(token);
+  const userData = user;
 
-  async function signIn ({ email, password }) {
+  const signIn = async ({ nickname, password }) => {
     try {
-      const response = await api.post('/sessions', { email, password })
-      const { token, refreshToken, permissions, roles } = response.data
+      const response = await api.post("/auth/login", { nickname, password });
+      const { token, permissions, roles } = response.data;
 
-      createTokenCookies(token, refreshToken)
-      setUser({ email, permissions, roles })
-      setAuthorizationHeader(api.defaults, token)
+      createTokenCookies(token);
+      setUser({ nickname, permissions, roles });
+      setAuthorizationHeader(api.defaults, token);
     } catch (error) {
-      const err = error 
-      return err
+      const err = error;
+      return err;
     }
-  }
+  };
 
-  function signOut (pathname = '/login') {
-    removeTokenCookies()
-    setUser(null)
-    setLoadingUserData(false)
-    navigate(pathname)
-  }
+  const signUp = async (values) => {
+    try {
+      const response = await api.post("/auth/register", values);
+      const { token, permissions, roles } = response.data;
+
+      createTokenCookies(token);
+      setUser({ nickname: values.nickname, permissions, roles });
+      setAuthorizationHeader(api.defaults, token);
+    } catch (error) {
+      const err = error;
+      return err;
+    }
+  };
+
+  const signOut = (redirectTo = "/login") => {
+    removeTokenCookies();
+    setUser(null);
+    setLoadingUserData(false);
+    navigate(redirectTo);
+  };
 
   useEffect(() => {
-    if (!token) signOut(pathname)
-  }, [pathname, token])
+    if (!token) signOut(pathname);
+  }, [pathname, token]);
 
   useEffect(() => {
-    const token = getToken()
+    const token = getToken();
 
-    async function getUserData () {
-      setLoadingUserData(true)
+    async function getUserData() {
+      setLoadingUserData(true);
 
       try {
-        const response = await api.get('/me')
+        const response = await api.get("/api/user");
 
         if (response?.data) {
-          const { email, permissions, roles } = response.data
-          setUser({ email, permissions, roles })
+          const { nickname, permissions, roles } = response.data;
+          setUser({ nickname, permissions, roles });
         }
       } catch (error) {
-        signOut()
+        signOut();
       }
 
-      setLoadingUserData(false)
+      setLoadingUserData(false);
     }
 
     if (token) {
-      setAuthorizationHeader(api.defaults, token)
-      getUserData()
+      setAuthorizationHeader(api.defaults, token);
+      getUserData();
     }
-  }, [])
+  }, []);
 
   return (
-    <AuthContext.Provider value={{
-      isAuthenticated,
-      user: userData,
-      loadingUserData,
-      signIn,
-      signOut
-    }}>
+    <AuthContext.Provider
+      value={{
+        isAuthenticated,
+        user: userData,
+        loadingUserData,
+        signIn,
+        signOut,
+        signUp,
+      }}
+    >
       {children}
     </AuthContext.Provider>
-  )
-}
+  );
+};

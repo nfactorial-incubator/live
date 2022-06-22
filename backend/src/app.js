@@ -15,7 +15,7 @@ const morgan = require('morgan');
 const app = express();
 
 // middleware
-var whitelist = ['http://localhost:1337']; //white list consumers
+var whitelist = ['http://localhost:3000']; //white list consumers
 var corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {

@@ -8,11 +8,8 @@ const getUser = async (req, res) => {
     try {
         const id = req.auth.id;
         const user = await User.findOne({ _id: id });
-        const base64Avatar = user.avatar.toString('base64');
         if (user) {
-            return res
-                .status(201)
-                .json({ ...toUserDTO(user), avatar: base64Avatar });
+            return res.status(201).json(toUserDTO(user));
         } else {
             return res.status(404).send({ message: 'User not found' });
         }
