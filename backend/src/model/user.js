@@ -26,8 +26,7 @@ const toUserDTO = (model) => {
         lastname: model.lastname,
         nickname: model.nickname,
         role: model.role,
-        token: model.token,
-        checks: model.checks
+        token: model.token
     };
 };
 

@@ -2,13 +2,38 @@ import React, { useContext, useEffect, useState } from "react";
 import { api } from "../../services/api";
 
 export const CheckInOut = () => {
-  const [status, setStatus] = useState("checkIn");
-  const [statusText, setStatusText] = useState("");
+  const [lastCheck, setLastCheck] = useState();
+  const [status, setStatus] = useState();
+
+  useEffect(() => {
+    getLastCheck();
+  }, []);
+
+  useEffect(() => {
+    if (lastCheck) {
+      setStatus(
+        `${lastCheck.type === "in" ? "В универе" : "Дома"} с ${new Date(
+          lastCheck.createdAt
+        ).toLocaleTimeString([], {
+          hour12: false,
+        })}`
+      );
+    }
+  }, [lastCheck]);
+
+  const getLastCheck = async () => {
+    try {
+      const response = await api.get("/api/check/last");
+      setLastCheck(response.data.lastCheck);
+    } catch (error) {
+      alert(error.response.data.message);
+    }
+  };
 
   const onCheckIn = async () => {
     try {
       const response = await api.post("/api/check/in");
-      alert(response.data.message);
+      setLastCheck(response.data);
     } catch (error) {
       alert(error.response.data.message);
     }
@@ -17,7 +42,7 @@ export const CheckInOut = () => {
   const onCheckOut = async () => {
     try {
       const response = await api.post("/api/check/out");
-      alert(response.data.message);
+      setLastCheck(response.data);
     } catch (error) {
       alert(error.response.data.message);
     }
@@ -26,12 +51,14 @@ export const CheckInOut = () => {
   return (
     <div>
       <h1>Check In / Check Out</h1>
-      <p>Current status: {statusText}</p>
-      {/* {status === "loading" && <p>Loading...</p>}
-      {status === "checkIn" && <button onClick={onCheckIn}>Check In</button>}
-      {status === "checkOut" && <button onClick={onCheckOut}>Check Out</button>} */}
-      <button onClick={onCheckIn}>Check In</button>
-      <button onClick={onCheckOut}>Check Out</button>
+      <p>Current status: {status}</p>
+      {!lastCheck && <p>Loading...</p>}
+      {lastCheck && lastCheck.type === "out" && (
+        <button onClick={onCheckIn}>Check In</button>
+      )}
+      {lastCheck && lastCheck.type === "in" && (
+        <button onClick={onCheckOut}>Check Out</button>
+      )}
     </div>
   );
 };

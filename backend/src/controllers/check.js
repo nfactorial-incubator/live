@@ -22,9 +22,10 @@ const checkIn = async (req, res) => {
             { new: true }
         );
 
-        return res.status(200).json({
-            message: `Check In Successful at ${updated.checks.pop().createdAt}`
-        });
+        return res.status(200).json(updated.checks.pop());
+        // return res.status(200).json({
+        //     message: `Check In Successful at ${updated.checks.pop().createdAt}`
+        // });
     } catch (err) {
         console.log(err);
         return res.status(502).json({ message: 'some shit on our side' });
@@ -50,9 +51,31 @@ const checkOut = async (req, res) => {
             { new: true }
         );
 
-        return res.status(200).json({
-            message: `Check Out Successful at ${updated.checks.pop().createdAt}`
-        });
+        return res.status(200).json(updated.checks.pop());
+    } catch (err) {
+        console.log(err);
+        return res.status(502).json({ message: 'some shit on our side' });
+    }
+};
+
+const getLastCheck = async (req, res) => {
+    try {
+        const id = req.auth.id;
+        const user = await User.findById(id);
+        const lastCheck = user.checks.pop();
+        return res.status(200).json({ lastCheck });
+    } catch (err) {
+        console.log(err);
+        return res.status(502).json({ message: 'some shit on our side' });
+    }
+};
+
+const getAllChecks = async (req, res) => {
+    try {
+        const userId = req.params.userId ?? req.auth.id;
+        const user = await User.findById(userId);
+        const checks = user.checks;
+        return res.status(200).json({ checks });
     } catch (err) {
         console.log(err);
         return res.status(502).json({ message: 'some shit on our side' });
@@ -61,5 +84,8 @@ const checkOut = async (req, res) => {
 
 controller.post('/in', checkIn);
 controller.post('/out', checkOut);
+controller.get('/last', getLastCheck);
+controller.get('/', getAllChecks);
+controller.get('/:userId', getAllChecks);
 
 module.exports = controller;

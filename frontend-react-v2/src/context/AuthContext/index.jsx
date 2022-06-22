@@ -69,8 +69,9 @@ export const AuthProvider = ({ children }) => {
         const response = await api.get("/api/user");
 
         if (response?.data) {
-          const { nickname, permissions, roles } = response.data;
-          setUser({ nickname, permissions, roles });
+          const user = response.data;
+          console.log(user);
+          setUser(user);
         }
       } catch (error) {
         signOut();
