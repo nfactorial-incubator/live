@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { UserSchema } = require('../model/user.js');
 
 const eventSchema = new mongoose.Schema({
     id: { type: String, unique: true, required: true },

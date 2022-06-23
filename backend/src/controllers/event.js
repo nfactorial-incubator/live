@@ -28,7 +28,7 @@ const get = async (req, res) => {
 const create = async (req, res) => {
     try {
         const { id, title, description, startDate } = req.body;
-        const date = new Date(startDate);
+        const date = new Date(startDate * 1000); // converting from unix timestamp
         const event = await Event.create({
             id,
             title,
