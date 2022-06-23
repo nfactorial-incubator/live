@@ -36,7 +36,12 @@ export function NavBar() {
       <IsAuth>
         <>
           <span>Welcome, {user?.nickname}!</span>
-          <button data-testid="logout-button" onClick={() => signOut()}>
+          <button
+            onClick={() => {
+              console.log("onlogoutclicked");
+              signOut();
+            }}
+          >
             Logout
           </button>
         </>

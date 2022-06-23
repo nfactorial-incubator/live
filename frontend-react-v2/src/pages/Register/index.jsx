@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { uniqueNamesGenerator } from "unique-names-generator";
+import { nouns } from "../../utils/nouns";
 
 const initialFormValues = () => {
   return {
@@ -17,19 +19,38 @@ export const Register = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    let nickname;
+    if (name === "firstname") {
+      nickname = generateNickname(value);
+    }
 
     setValues({
       ...values,
       [name]: value,
+      nickname,
     });
   };
 
-  async function handleSubmit(e) {
+  const generateNickname = (firstname) => {
+    if (firstname === "") {
+      return "";
+    }
+    const lowercased = firstname.toLowerCase();
+    const random = uniqueNamesGenerator({
+      dictionaries: [nouns],
+      length: 1,
+      separator: "-",
+      style: "lowerCase",
+    });
+    return `${lowercased}-${random}`;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setRequestStatus("loading");
     await signUp({ ...values, role: "student" });
     setRequestStatus("success");
-  }
+  };
 
   useEffect(() => {
     // clean the function to fix memory leak
@@ -70,9 +91,10 @@ export const Register = () => {
             type="text"
             name="nickname"
             id="nickname"
-            disabled={requestStatus === "loading"}
+            disabled
             onChange={handleChange}
           />
+          <span>Nickname is generated automatically</span>
         </div>
 
         <div>
