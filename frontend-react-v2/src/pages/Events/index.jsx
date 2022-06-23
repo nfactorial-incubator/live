@@ -25,7 +25,7 @@ export const Events = () => {
         {events.map((event) => {
           return (
             <li>
-              <Link key={event.id} state={event} to={`/events/${event.id}`}>
+              <Link key={event.id} to={`/events/${event.id}`}>
                 {event.title}
               </Link>
             </li>

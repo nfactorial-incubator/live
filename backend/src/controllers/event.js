@@ -17,8 +17,10 @@ const getAll = async (req, res) => {
 const get = async (req, res) => {
     try {
         const { eventId } = req.params;
+        const userId = req.auth.id;
         const event = await Event.findOne({ id: eventId });
-        return res.status(200).json(toEventDTO(event));
+        const isRegistered = event.registeredUsers.includes(userId);
+        return res.status(200).json({ ...toEventDTO(event), isRegistered });
     } catch (err) {
         console.log(err);
         return res.status(502).json({ message: 'some shit on our side' });
@@ -52,8 +54,8 @@ const register = async (req, res) => {
             { $addToSet: { registeredUsers: userId } },
             { new: true }
         );
-
-        return res.status(200).json(toEventDTO(updated));
+        const isRegistered = updated.registeredUsers.includes(userId);
+        return res.status(200).json({ ...toEventDTO(updated), isRegistered });
     } catch (err) {
         console.log(err);
         return res.status(502).json({ message: 'some shit on our side' });
@@ -70,8 +72,8 @@ const unregister = async (req, res) => {
             { $pull: { registeredUsers: userId } },
             { new: true }
         );
-
-        return res.status(200).json(toEventDTO(updated));
+        const isRegistered = updated.registeredUsers.includes(userId);
+        return res.status(200).json({ ...toEventDTO(updated), isRegistered });
     } catch (err) {
         console.log(err);
         return res.status(502).json({ message: 'some shit on our side' });
