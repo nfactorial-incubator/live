@@ -10,6 +10,7 @@ const dashboardController = require('./controllers/dashboard.js');
 const authController = require('./controllers/auth.js');
 const userController = require('./controllers/user.js');
 const checkController = require('./controllers/check.js');
+const eventController = require('./controllers/event.js');
 const dinnerReservationController = require('./controllers/dinnerReservation.js');
 
 const morgan = require('morgan');
@@ -53,6 +54,7 @@ app.use('/api/hw/submission', hwSubmissionController);
 app.use('/api/idea/submission', ideaSubmissionController);
 app.use('/api/user', userController);
 app.use('/api/check', checkController);
+app.use('/api/event', eventController);
 app.use('/api/dinner/reservation', dinnerReservationController);
 
 module.exports = app;
