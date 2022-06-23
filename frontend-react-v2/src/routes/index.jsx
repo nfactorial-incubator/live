@@ -7,8 +7,8 @@
  */
 import { Routes, Route } from "react-router-dom";
 import { CheckInOut } from "../pages/CheckInOut";
+import { Event } from "../pages/Event";
 import { Events } from "../pages/Events";
-
 import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
 import { Profile } from "../pages/Profile";
@@ -65,10 +65,10 @@ export const RouteList = () => (
     />
 
     <Route
-      path="/events/blind-pp"
+      path="/events/:eventId"
       element={
         <PrivateRoute redirectTo="/login">
-          <h1>Blind Pair Programming Event</h1>
+          <Event />
         </PrivateRoute>
       }
     />
