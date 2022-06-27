@@ -1,11 +1,5 @@
-/**
- * Composing <Route> in React Router v6
- * https://gist.github.com/mjackson/d54b40a094277b7afdd6b81f51a0393f
- *
- * Upgrading from v5
- * https://reactrouter.com/docs/en/v6/upgrading/v5
- */
 import { Routes, Route } from "react-router-dom";
+import { IsAuth } from "../components/IsAuth";
 import { CheckInOut } from "../pages/CheckInOut";
 import { Event } from "../pages/Event";
 import { Events } from "../pages/Events";
@@ -23,9 +17,9 @@ export const RouteList = () => (
     <Route
       path="/"
       element={
-        <PrivateRoute redirectTo="/login">
+        <PublicRoute>
           <Home />
-        </PrivateRoute>
+        </PublicRoute>
       }
     />
 

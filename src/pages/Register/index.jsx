@@ -74,8 +74,6 @@ export const Register = () => {
   return (
     <div class="grid h-screen place-items-center overflow-auto">
       <form noValidate onSubmit={handleSubmit} class="flex flex-col w-80 my-16">
-        <img src={logo} alt="Logo" class="w-20 h-20 mb-6 self-center" />
-        <h1 class="text-xl mb-6 font-medium text-center">Welcome! 👋</h1>
         <div class="mb-6">
           <label
             for="firstname"

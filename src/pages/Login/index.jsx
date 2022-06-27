@@ -48,8 +48,6 @@ export const Login = () => {
   return (
     <div class="grid h-screen place-items-center ">
       <form noValidate onSubmit={handleSubmit} class="flex flex-col w-80">
-        <img src={logo} alt="Logo" class="w-20 h-20 mb-6 self-center" />
-        <h1 class="text-xl mb-6 font-medium text-center">Welcome! 👋</h1>
         <div class="mb-6">
           <label
             for="nickname"
@@ -91,7 +89,7 @@ export const Login = () => {
         <button
           type="submit"
           disabled={loginRequestStatus === "loading"}
-          class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          class="w-full text-white bg-primary-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           {loginRequestStatus === "loading" && (
             <>
