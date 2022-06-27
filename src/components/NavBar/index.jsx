@@ -5,16 +5,11 @@ import { AuthContext } from "../../context/AuthContext";
 import { CanAccess } from "../CanAccess";
 import { IsAuth } from "../IsAuth";
 
-export function NavBar() {
+export const NavBar = () => {
   const { user, signOut, isAuthenticated } = useContext(AuthContext);
 
   const GuestNavBar = () => {
-    return (
-      <>
-        <Link to="/login">Login</Link>
-        <Link to="/register">Register</Link>
-      </>
-    );
+    return <></>;
   };
 
   const StudentNavBar = () => {
@@ -42,4 +37,4 @@ export function NavBar() {
       {isAuthenticated ? <StudentNavBar /> : <GuestNavBar />}
     </div>
   );
-}
+};
