@@ -11,6 +11,7 @@ import { User } from "../pages/User";
 import { Users } from "../pages/Users";
 import { PrivateRoute } from "./PrivateRoute.jsx";
 import { PublicRoute } from "./PublicRoute";
+import { NotFound } from "../pages/NotFound";
 
 export const RouteList = () => (
   <Routes>
@@ -95,6 +96,6 @@ export const RouteList = () => (
       }
     />
 
-    <Route path="*" element={<h1>404</h1>} />
+    <Route path="*" element={<NotFound />} />
   </Routes>
 );
