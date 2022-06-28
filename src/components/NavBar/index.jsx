@@ -19,7 +19,7 @@ export const NavBar = () => {
           </span>
         </Navbar.Brand>
         <div className="flex md:order-2">
-          <Dropdown arrowIcon={false} inline={true} label={<div>Profie</div>}>
+          <Dropdown arrowIcon={false} inline={true} label={<div>Profile</div>}>
             <Dropdown.Header>
               <span className="block text-sm">
                 {user.firstname} {user.lastname}
