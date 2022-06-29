@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { adjectives } from "unique-names-generator";
 import { api } from "../../services/api";
 
 export const Users = () => {
@@ -19,6 +20,7 @@ export const Users = () => {
       return error;
     }
   };
+
   return (
     <div>
       <h1>Users</h1>

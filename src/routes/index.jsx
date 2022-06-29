@@ -12,6 +12,8 @@ import { Users } from "../pages/Users";
 import { PrivateRoute } from "./PrivateRoute.jsx";
 import { PublicRoute } from "./PublicRoute";
 import { NotFound } from "../pages/NotFound";
+import { CreateProject } from "../pages/CreateProject";
+import { Projects } from "../pages/Projects";
 
 export const RouteList = () => (
   <Routes>
@@ -83,6 +85,24 @@ export const RouteList = () => (
       element={
         <PrivateRoute redirectTo="/login">
           <Users />
+        </PrivateRoute>
+      }
+    />
+
+    <Route
+      path="/projects"
+      element={
+        <PrivateRoute redirectTo="/login">
+          <Projects />
+        </PrivateRoute>
+      }
+    />
+
+    <Route
+      path="/project/create"
+      element={
+        <PrivateRoute redirectTo="/login">
+          <CreateProject />
         </PrivateRoute>
       }
     />
