@@ -53,7 +53,7 @@ export const Project = () => {
       const response = await api.post("/api/project", body);
       const { title } = response.data;
       alert(title, " project has been successfully created!");
-      goBack();
+      viewAllProjects();
     } catch (error) {
       const err = error;
       throw err;
@@ -81,7 +81,7 @@ export const Project = () => {
       <button
         type="button"
         onClick={viewAllProjects}
-        className="max-w-fit border border-gray-300 text-gray-800  font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
+        className="max-w-fit border border-gray-300 text-gray-800 hover:bg-gray-50  font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +102,7 @@ export const Project = () => {
       <form
         noValidate
         onSubmit={handleSubmit}
-        className="grid grid-cols-4 gap-6"
+        className="grid grid-cols-4 gap-x-6 gap-y-0"
       >
         <div className="col-span-2 col-start-1 ">
           <div className="mb-6">
@@ -123,7 +123,7 @@ export const Project = () => {
             />
           </div>
 
-          <div className="mb-6">
+          <div className="mb-0">
             <label
               for="description"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
@@ -181,7 +181,7 @@ export const Project = () => {
         </div>
 
         <div className="col-span-2 col-start-3">
-          <div className="mb-6">
+          <div className="mb-0">
             <p className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               Pick 2 emojis describing your project
             </p>
@@ -211,7 +211,7 @@ export const Project = () => {
         <button
           type="submit"
           disabled={requestStatus === "loading"}
-          className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="max-w-fit text-white bg-blue-700 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center "
         >
           {requestStatus === "loading" && (
             <>
@@ -233,7 +233,7 @@ export const Project = () => {
               </svg>
             </>
           )}
-          {requestStatus === "loading" ? "Loading..." : "Create Project"}
+          {requestStatus === "loading" ? "Loading..." : "Submit"}
         </button>
       </form>
     </LayoutContainer>
