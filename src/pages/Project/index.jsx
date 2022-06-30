@@ -1,10 +1,12 @@
 import { Textarea } from "flowbite-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Header } from "../../components/Header";
 import { LayoutContainer } from "../../components/LayoutContainer";
 import { api } from "../../services/api";
 import Picker, { SKIN_TONE_NEUTRAL } from "emoji-picker-react";
+import { GoMarkGithub } from "react-icons/go";
+import { TbExternalLink } from "react-icons/tb";
 
 const initialFormValues = () => {
   return {
@@ -17,10 +19,71 @@ const initialFormValues = () => {
 };
 
 export const Project = () => {
+  const { projectId } = useParams();
+
+  return <ProjectDetails />;
+};
+
+export const ProjectDetails = () => {
+  return (
+    <LayoutContainer>
+      <div className="flex flex-col gap-2">
+        <h5 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+          {"🚀👋 → Tiktok programming"}
+        </h5>
+        <p className="font-regular text-xl text-gray-400">
+          {"Aidar Nugmanov • @aidar-jquery-lover"}
+        </p>
+      </div>
+      <p className="text-xl">
+        For years parents have espoused the health benefits of eating garlic
+        bread with cheese to their children, with the food earning such an
+        iconic status in our culture that kids will often dress up as warm,
+        cheesy loaf for Halloween.
+      </p>
+      <div className="flex flex-row gap-4">
+        <button
+          type="button"
+          onClick={() => {}}
+          className="max-w-fit border border-gray-300 text-gray-800 hover:bg-gray-50  font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
+        >
+          <GoMarkGithub className="mr-2 w-6 h-6" />
+          View on GitHub
+        </button>
+        <button
+          type="button"
+          onClick={() => {}}
+          className="max-w-fit border border-gray-300 text-gray-800 hover:bg-gray-50  font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
+        >
+          <TbExternalLink className="mr-2 w-6 h-6" />
+          Visit Website
+        </button>
+      </div>
+      <iframe
+        style={{
+          width: "100vw",
+          height: "100vh",
+          position: "relative",
+          left: "50%",
+          right: "50%",
+          marginLeft: "-50vw",
+          marginRight: "-50vw",
+        }}
+        src="https://trainy.vercel.app/"
+      />
+    </LayoutContainer>
+  );
+};
+
+export const CreateOrEditProject = () => {
+  const DESCRIPTION_MAX_LENGTH = 150;
+
   const [values, setValues] = useState(initialFormValues);
   const [requestStatus, setRequestStatus] = useState("success");
   const [chosenEmojis, setChosenEmojis] = useState([]);
-  const [descriptionCharsLeft, setDescriptionCharsLeft] = useState(150);
+  const [descriptionCharsLeft, setDescriptionCharsLeft] = useState(
+    DESCRIPTION_MAX_LENGTH
+  );
 
   const onEmojiClick = (event, emojiObject) => {
     setChosenEmojis([emojiObject.emoji, ...chosenEmojis]);
@@ -38,7 +101,7 @@ export const Project = () => {
 
   const handleDescriptionChange = (e) => {
     handleChange(e);
-    setDescriptionCharsLeft(150 - e.target.value.length);
+    setDescriptionCharsLeft(DESCRIPTION_MAX_LENGTH - e.target.value.length);
   };
 
   const viewAllProjects = () => {

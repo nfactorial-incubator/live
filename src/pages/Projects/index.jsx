@@ -1,10 +1,8 @@
-import { Button, Card } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Header } from "../../components/Header";
 import { LayoutContainer } from "../../components/LayoutContainer";
 import { api } from "../../services/api";
-import { CreateProject } from "../Project";
 
 export const Projects = () => {
   const [projects, setProjects] = useState([]);

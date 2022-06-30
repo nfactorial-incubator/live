@@ -7,23 +7,23 @@ import { Navbar, Dropdown } from "flowbite-react";
 export const NavBar = () => {
   const { user, signOut, isAuthenticated } = useContext(AuthContext);
 
-  const StudentNavBarV2 = () => {
+  const StudentNavBar = () => {
     return (
       <div className="grid grid-cols-6 my-6">
-        <div className="flex flex-row justify-between col-start-3 col-span-2 ">
+        <div className="flex flex-row justify-between items-center col-start-3 col-span-2 ">
           <NavLink to="/projects">
-            <img src={logo} className="mr-3 h-6 sm:h-9" />
+            <img src={logo} className="mr-3 h-12" />
           </NavLink>
           {user && (
             <Dropdown
-              class="border border-gray-300 hover:bg-gray-50 text-gray-800 rounded-md"
+              class="border border-gray-300 hover:bg-gray-50 self-center text-gray-800 rounded-md"
               arrowIcon={false}
               inline={false}
               label={
-                <div className="flex flex-row gap-1 place-content-center">
+                <div className="flex flex-row gap-1">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 self-center"
+                    className="h-5 w-5 self-center"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -35,12 +35,14 @@ export const NavBar = () => {
                       d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                     />
                   </svg>
-                  <div className="text-md font-regular">{user.nickname}</div>
+                  <div className="text-md self-center font-regular">
+                    {user.nickname}
+                  </div>
                 </div>
               }
             >
               <Dropdown.Header>
-                <span className="block text-sm">
+                <span className="block text-sm font-normal">
                   {user.firstname} {user.lastname}
                 </span>
                 <span className="block truncate text-sm font-medium">
@@ -55,58 +57,5 @@ export const NavBar = () => {
     );
   };
 
-  const StudentNavBar = () => {
-    return (
-      <Navbar fluid={true} rounded={true}>
-        <Navbar.Brand href="https://nfactorial.live">
-          <img src={logo} className="mr-3 h-6 sm:h-9" />
-          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-            nFactorial Incubator
-          </span>
-        </Navbar.Brand>
-        <div className="flex md:order-2">
-          <Dropdown
-            arrowIcon={false}
-            inline={true}
-            label={<div>{user.nickname}</div>}
-          >
-            <Dropdown.Header>
-              <span className="block text-sm">
-                {user.firstname} {user.lastname}
-              </span>
-              <span className="block truncate text-sm font-medium">
-                {user.nickname}
-              </span>
-            </Dropdown.Header>
-            {/* <Dropdown.Item>Dashboard</Dropdown.Item>
-            <Dropdown.Item>Settings</Dropdown.Item>
-            <Dropdown.Item>Earnings</Dropdown.Item> */}
-            {/* <Dropdown.Divider /> */}
-            <Dropdown.Item onClick={() => signOut()}>Logout</Dropdown.Item>
-          </Dropdown>
-          <Navbar.Toggle />
-        </div>
-        {/* <Navbar.Collapse>
-          <NavLink
-            to="/check-in-out"
-            className={({ isActive }) =>
-              isActive ? "text-blue-700" : "text-black"
-            }
-          >
-            CheckInOut
-          </NavLink>
-          <NavLink
-            to="/projects"
-            className={({ isActive }) =>
-              isActive ? "text-blue-700" : "text-black"
-            }
-          >
-            Projects
-          </NavLink> */}
-        {/* </Navbar.Collapse> */}
-      </Navbar>
-    );
-  };
-
-  return <>{isAuthenticated ? <StudentNavBarV2 /> : null}</>;
+  return <>{isAuthenticated ? <StudentNavBar /> : null}</>;
 };
