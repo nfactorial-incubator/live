@@ -13,11 +13,9 @@ export const NavBar = () => {
         <div className="flex flex-row justify-between col-start-2 col-span-2 ">
           <div className="flex flex-row ">
             <img src={logo} className="mr-3 h-6 sm:h-9" />
-            <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-              nFactorial Incubator
-            </span>
           </div>
           <Dropdown
+            class="border border-gray-300 hover:border-gray-400 text-gray-800  rounded-md"
             arrowIcon={false}
             inline={false}
             label={<div>{user.nickname}</div>}
