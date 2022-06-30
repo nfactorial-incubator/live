@@ -99,7 +99,7 @@ export const RouteList = () => (
     />
 
     <Route
-      path="/project"
+      path="/project/:slug"
       element={
         <PrivateRoute redirectTo="/login">
           <Project />

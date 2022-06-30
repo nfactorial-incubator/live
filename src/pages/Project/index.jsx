@@ -1,5 +1,5 @@
 import { Textarea } from "flowbite-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Header } from "../../components/Header";
 import { LayoutContainer } from "../../components/LayoutContainer";
@@ -7,6 +7,7 @@ import { api } from "../../services/api";
 import Picker, { SKIN_TONE_NEUTRAL } from "emoji-picker-react";
 import { GoMarkGithub } from "react-icons/go";
 import { TbExternalLink } from "react-icons/tb";
+import { AuthContext } from "../../context/AuthContext";
 
 const initialFormValues = () => {
   return {
@@ -19,28 +20,38 @@ const initialFormValues = () => {
 };
 
 export const Project = () => {
-  const { projectId } = useParams();
+  const { slug } = useParams();
+  const { state: project } = useLocation();
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  return <>{projectId ? <ProjectDetails /> : <ProjectDetails />}</>;
+  return (
+    <>
+      {slug === "new" || (project && project.nickname === user.nickname) ? (
+        <CreateOrEditProject project={project} />
+      ) : (
+        <ProjectDetails project={project} />
+      )}
+    </>
+  );
 };
 
-export const ProjectDetails = () => {
+export const ProjectDetails = ({ project }) => {
   return (
     <LayoutContainer>
       <div className="flex flex-col gap-2">
         <h5 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
-          {"🚀👋 → Tiktok programming"}
+          {project.emojis}
+          {" → "}
+          {project.title}
         </h5>
         <p className="font-regular text-xl text-gray-400">
-          {"Aidar Nugmanov • @aidar-jquery-lover"}
+          {project.fullname}
+          {" • "}
+          {project.nickname}
         </p>
       </div>
-      <p className="text-xl">
-        For years parents have espoused the health benefits of eating garlic
-        bread with cheese to their children, with the food earning such an
-        iconic status in our culture that kids will often dress up as warm,
-        cheesy loaf for Halloween.
-      </p>
+      <p className="text-xl">{project.description}</p>
       <div className="flex flex-row gap-4">
         <button
           type="button"
@@ -69,16 +80,26 @@ export const ProjectDetails = () => {
           marginLeft: "-50vw",
           marginRight: "-50vw",
         }}
-        src="https://trainy.vercel.app/"
+        src={project.deployedUrl}
       />
     </LayoutContainer>
   );
 };
 
-export const CreateOrEditProject = () => {
+export const CreateOrEditProject = ({ project }) => {
   const DESCRIPTION_MAX_LENGTH = 150;
 
-  const [values, setValues] = useState(initialFormValues);
+  const [values, setValues] = useState(
+    project
+      ? {
+          title: project.title,
+          description: project.description,
+          githubUrl: project.githubUrl,
+          deployedUrl: project.deployedUrl,
+          emojis: project.emojis,
+        }
+      : initialFormValues
+  );
   const [requestStatus, setRequestStatus] = useState("success");
   const [chosenEmojis, setChosenEmojis] = useState([]);
   const [descriptionCharsLeft, setDescriptionCharsLeft] = useState(
@@ -125,7 +146,10 @@ export const CreateOrEditProject = () => {
     try {
       setRequestStatus("loading");
       const emojis = chosenEmojis?.[0] + chosenEmojis?.[1];
-      await createProject({ ...values, emojis });
+      await createProject({
+        ...values,
+        emojis,
+      });
     } catch (error) {
       alert(error.response.data.message ?? error);
     } finally {
@@ -136,7 +160,7 @@ export const CreateOrEditProject = () => {
   return (
     <LayoutContainer>
       <Header
-        title={"Create Project"}
+        title={project ? "Edit Project" : "Create Project"}
         subtitle={"Submit your amazing project, so others can get inspired!"}
       />
       <button
@@ -193,6 +217,7 @@ export const CreateOrEditProject = () => {
             </label>
             <Textarea
               id="description"
+              value={values.description}
               name="description"
               required={true}
               rows={4}

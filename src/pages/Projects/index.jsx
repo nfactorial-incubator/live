@@ -29,7 +29,7 @@ export const Projects = () => {
           "List of projects that are being built by our students right now."
         }
       />
-      <Link to="/project">
+      <Link to="/project/new">
         <button className="flex flex-row place-content-center gap-2 bg-blue-700 text-white hover:bg-blue-600 text-sm rounded-md py-2.5 px-4">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -51,18 +51,20 @@ export const Projects = () => {
       <div className="grid grid-cols-2 gap-5 mb-6">
         {projects?.length > 0 ? (
           projects.map((project) => (
-            <div className="flex flex-col gap-y-1 cursor-pointer border bg-white rounded-md p-6 transform transition-transform ease-in-out duration-100 hover:border-gray-300 hover:-translate-y-1 focus:-translate-y-1">
-              <div>{project.emojis}</div>
-              <div className="font-semibold text-gray-800">
-                {"Tiktok for Programming"}
+            <Link to={`/project/${project._id}`} state={project}>
+              <div className="flex flex-col gap-y-1 cursor-pointer border bg-white rounded-md p-6 transform transition-transform ease-in-out duration-100 hover:border-gray-300 hover:-translate-y-1 focus:-translate-y-1">
+                <div>{project.emojis}</div>
+                <div className="font-semibold text-gray-800">
+                  {project.title}
+                </div>
+                <div className="text-sm text-gray-400 break-words ">
+                  {"@" + project.nickname}
+                </div>
+                <div className="text-sm text-gray-700 break-words ">
+                  {project.description}
+                </div>
               </div>
-              <div className="text-sm text-gray-400 break-words ">
-                {"@aidar-jquery-lover"}
-              </div>
-              <div className="text-sm text-gray-700 break-words ">
-                {project.description}
-              </div>
-            </div>
+            </Link>
           ))
         ) : (
           <p>Empty projects list</p>
