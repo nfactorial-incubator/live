@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Header } from "../../components/Header";
 import { LayoutContainer } from "../../components/LayoutContainer";
 import { api } from "../../services/api";
-import { CreateProject } from "../CreateProject";
+import { CreateProject } from "../Project";
 
 export const Projects = () => {
   const [projects, setProjects] = useState([]);
@@ -31,7 +31,7 @@ export const Projects = () => {
           "List of projects that are being built by our students right now."
         }
       />
-      <Link to="/project/create">
+      <Link to="/project">
         <button className="bg-blue-700 text-white hover:bg-blue-600 text-sm rounded-md py-2.5 px-6">
           Create project
         </button>

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.24.0",
+    "emoji-picker-react": "^3.5.1",
     "flowbite": "^1.4.7",
     "flowbite-react": "^0.0.27",
     "nookies": "^2.5.2",

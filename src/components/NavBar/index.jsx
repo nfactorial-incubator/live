@@ -9,8 +9,8 @@ export const NavBar = () => {
 
   const StudentNavBarV2 = () => {
     return (
-      <div className="grid grid-cols-4 my-6">
-        <div className="flex flex-row justify-between col-start-2 col-span-2 ">
+      <div className="grid grid-cols-6 my-6">
+        <div className="flex flex-row justify-between col-start-3 col-span-2 ">
           <NavLink to="/projects">
             <img src={logo} className="mr-3 h-6 sm:h-9" />
           </NavLink>

@@ -12,7 +12,7 @@ import { Users } from "../pages/Users";
 import { PrivateRoute } from "./PrivateRoute.jsx";
 import { PublicRoute } from "./PublicRoute";
 import { NotFound } from "../pages/NotFound";
-import { CreateProject } from "../pages/CreateProject";
+import { Project } from "../pages/Project";
 import { Projects } from "../pages/Projects";
 
 export const RouteList = () => (
@@ -99,10 +99,10 @@ export const RouteList = () => (
     />
 
     <Route
-      path="/project/create"
+      path="/project"
       element={
         <PrivateRoute redirectTo="/login">
-          <CreateProject />
+          <Project />
         </PrivateRoute>
       }
     />
