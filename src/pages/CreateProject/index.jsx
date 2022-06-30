@@ -1,6 +1,8 @@
 import { Modal } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Header } from "../../components/Header";
+import { LayoutContainer } from "../../components/LayoutContainer";
 import { api } from "../../services/api";
 
 const initialFormValues = () => {
@@ -25,8 +27,8 @@ export const CreateProject = ({ show }) => {
     });
   };
 
-  const goBack = () => {
-    navigate(-1);
+  const viewAllProjects = () => {
+    navigate("/projects");
   };
 
   const createProject = async (body) => {
@@ -54,14 +56,33 @@ export const CreateProject = ({ show }) => {
   };
 
   return (
-    <div className="grid place-items-center overflow-auto">
+    <LayoutContainer>
+      <Header
+        title={"Create Project"}
+        subtitle={"Submit your amazing project, so others can get inspired!"}
+      />
       <button
-        onClick={goBack}
-        className=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        type="button"
+        onClick={viewAllProjects}
+        className="border border-gray-300 text-gray-800  font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
       >
-        Go back
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 mr-2"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"
+          />
+        </svg>
+        View all projects
       </button>
-      <form noValidate onSubmit={handleSubmit} className="flex flex-col w-80">
+      <form noValidate onSubmit={handleSubmit} className="col-span-2">
         <div className="mb-6">
           <label
             for="title"
@@ -73,7 +94,7 @@ export const CreateProject = ({ show }) => {
             value={values.title}
             type="text"
             name="title"
-            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
             id="title"
             disabled={requestStatus === "loading"}
             onChange={handleChange}
@@ -109,7 +130,7 @@ export const CreateProject = ({ show }) => {
             value={values.githubUrl}
             type="text"
             name="githubUrl"
-            className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             id="githubUrl"
             onChange={handleChange}
           />
@@ -126,7 +147,7 @@ export const CreateProject = ({ show }) => {
             value={values.deployedUrl}
             type="text"
             name="deployedUrl"
-            className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
             id="deployedUrl"
             onChange={handleChange}
           />
@@ -160,6 +181,6 @@ export const CreateProject = ({ show }) => {
           {requestStatus === "loading" ? "Loading..." : "Create Project"}
         </button>
       </form>
-    </div>
+    </LayoutContainer>
   );
 };

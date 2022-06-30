@@ -11,29 +11,27 @@ export const NavBar = () => {
     return (
       <div className="grid grid-cols-4 my-6">
         <div className="flex flex-row justify-between col-start-2 col-span-2 ">
-          <div className="flex flex-row ">
+          <NavLink to="/projects">
             <img src={logo} className="mr-3 h-6 sm:h-9" />
-          </div>
-          <Dropdown
-            class="border border-gray-300 hover:border-gray-400 text-gray-800  rounded-md"
-            arrowIcon={false}
-            inline={false}
-            label={<div>{user.nickname}</div>}
-          >
-            <Dropdown.Header>
-              <span className="block text-sm">
-                {user.firstname} {user.lastname}
-              </span>
-              <span className="block truncate text-sm font-medium">
-                {user.nickname}
-              </span>
-            </Dropdown.Header>
-            {/* <Dropdown.Item>Dashboard</Dropdown.Item>
-            <Dropdown.Item>Settings</Dropdown.Item>
-            <Dropdown.Item>Earnings</Dropdown.Item> */}
-            {/* <Dropdown.Divider /> */}
-            <Dropdown.Item onClick={() => signOut()}>Logout</Dropdown.Item>
-          </Dropdown>
+          </NavLink>
+          {user && (
+            <Dropdown
+              class="border border-gray-300 hover:border-gray-400 text-gray-800  rounded-md"
+              arrowIcon={false}
+              inline={false}
+              label={<div>{user.nickname}</div>}
+            >
+              <Dropdown.Header>
+                <span className="block text-sm">
+                  {user.firstname} {user.lastname}
+                </span>
+                <span className="block truncate text-sm font-medium">
+                  {user.nickname}
+                </span>
+              </Dropdown.Header>
+              <Dropdown.Item onClick={() => signOut()}>Logout</Dropdown.Item>
+            </Dropdown>
+          )}
         </div>
       </div>
     );
