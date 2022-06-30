@@ -5,5 +5,5 @@ import { AuthContext } from "../context/AuthContext";
 
 export function PublicRoute({ children }) {
   const { isAuthenticated } = useContext(AuthContext);
-  return isAuthenticated ? <Navigate to="/ideas" /> : <>{children}</>;
+  return isAuthenticated ? <Navigate to="/projects" /> : <>{children}</>;
 }

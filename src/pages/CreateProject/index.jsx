@@ -1,5 +1,6 @@
+import { Modal } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
 
 const initialFormValues = () => {
@@ -11,9 +12,10 @@ const initialFormValues = () => {
   };
 };
 
-export const CreateProject = () => {
+export const CreateProject = ({ show }) => {
   const [values, setValues] = useState(initialFormValues);
   const [requestStatus, setRequestStatus] = useState("success");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,11 +25,16 @@ export const CreateProject = () => {
     });
   };
 
+  const goBack = () => {
+    navigate(-1);
+  };
+
   const createProject = async (body) => {
     try {
       const response = await api.post("/api/project", body);
       const { title } = response.data;
       alert(title, " project has been successfully created!");
+      goBack();
     } catch (error) {
       const err = error;
       throw err;
@@ -47,12 +54,18 @@ export const CreateProject = () => {
   };
 
   return (
-    <div class="grid h-screen place-items-center overflow-auto">
-      <form noValidate onSubmit={handleSubmit} class="flex flex-col w-80 my-16">
-        <div class="mb-6">
+    <div className="grid place-items-center overflow-auto">
+      <button
+        onClick={goBack}
+        className=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      >
+        Go back
+      </button>
+      <form noValidate onSubmit={handleSubmit} className="flex flex-col w-80">
+        <div className="mb-6">
           <label
             for="title"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
           >
             Title
           </label>
@@ -60,17 +73,17 @@ export const CreateProject = () => {
             value={values.title}
             type="text"
             name="title"
-            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             id="title"
             disabled={requestStatus === "loading"}
             onChange={handleChange}
           />
         </div>
 
-        <div class="mb-6">
+        <div className="mb-6">
           <label
             for="description"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
           >
             Description
           </label>
@@ -78,17 +91,17 @@ export const CreateProject = () => {
             id="description"
             name="description"
             rows="4"
-            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Your project description..."
             disabled={requestStatus === "loading"}
             onChange={handleChange}
           ></textarea>
         </div>
 
-        <div class="mb-6">
+        <div className="mb-6">
           <label
             for="githubUrl"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
           >
             Github URL
           </label>
@@ -96,16 +109,16 @@ export const CreateProject = () => {
             value={values.githubUrl}
             type="text"
             name="githubUrl"
-            class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
             id="githubUrl"
             onChange={handleChange}
           />
         </div>
 
-        <div class="mb-6">
+        <div className="mb-6">
           <label
             for="deployedUrl"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
           >
             Deployed URL
           </label>
@@ -113,7 +126,7 @@ export const CreateProject = () => {
             value={values.deployedUrl}
             type="text"
             name="deployedUrl"
-            class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
             id="deployedUrl"
             onChange={handleChange}
           />
@@ -122,13 +135,13 @@ export const CreateProject = () => {
         <button
           type="submit"
           disabled={requestStatus === "loading"}
-          class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           {requestStatus === "loading" && (
             <>
               <svg
                 role="status"
-                class="inline w-4 h-4 mr-3 text-white animate-spin"
+                className="inline w-4 h-4 mr-3 text-white animate-spin"
                 viewBox="0 0 100 101"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
