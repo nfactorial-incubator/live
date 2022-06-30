@@ -21,7 +21,7 @@ const initialFormValues = () => {
 export const Project = () => {
   const { projectId } = useParams();
 
-  return <ProjectDetails />;
+  return <>{projectId ? <ProjectDetails /> : <ProjectDetails />}</>;
 };
 
 export const ProjectDetails = () => {

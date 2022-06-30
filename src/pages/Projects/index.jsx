@@ -51,9 +51,14 @@ export const Projects = () => {
       <div className="grid grid-cols-2 gap-5 mb-6">
         {projects?.length > 0 ? (
           projects.map((project) => (
-            <div className="flex flex-col cursor-pointer border bg-white rounded-md p-6 transform transition-transform ease-in-out duration-100 hover:border-gray-300 hover:-translate-y-1 focus:-translate-y-1">
+            <div className="flex flex-col gap-y-1 cursor-pointer border bg-white rounded-md p-6 transform transition-transform ease-in-out duration-100 hover:border-gray-300 hover:-translate-y-1 focus:-translate-y-1">
               <div>{project.emojis}</div>
-              <div className="font-semibold text-gray-800">{project.title}</div>
+              <div className="font-semibold text-gray-800">
+                {"Tiktok for Programming"}
+              </div>
+              <div className="text-sm text-gray-400 break-words ">
+                {"@aidar-jquery-lover"}
+              </div>
               <div className="text-sm text-gray-700 break-words ">
                 {project.description}
               </div>
