@@ -41,7 +41,6 @@ export const Project = () => {
 
   const handleDescriptionChange = (e) => {
     handleChange(e);
-    console.log(150 - e.target.value.length);
     setDescriptionCharsLeft(150 - e.target.value.length);
   };
 
@@ -187,10 +186,10 @@ export const Project = () => {
               Pick 2 emojis describing your project
             </p>
             <div className="flex flex-row my-4 gap-2">
-              <div className="flex place-content-center p-1 bg-white rounded-lg border border-gray-300">
+              <div className="flex place-content-center p-1 w-[31px] h-[34px] bg-white rounded-lg border border-gray-300">
                 {chosenEmojis?.[0]}
               </div>
-              <div className="flex place-content-center p-1 bg-white rounded-lg border border-gray-300">
+              <div className="flex place-content-center p-1 w-[31px] h-[34px] bg-white rounded-lg border border-gray-300">
                 {chosenEmojis?.[1]}
               </div>
             </div>
