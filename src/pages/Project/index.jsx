@@ -1,14 +1,10 @@
-import { Modal, Textarea } from "flowbite-react";
-import { useEffect, useState, userRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Textarea } from "flowbite-react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Header } from "../../components/Header";
 import { LayoutContainer } from "../../components/LayoutContainer";
 import { api } from "../../services/api";
-import Picker, {
-  SKIN_TONE_LIGHT,
-  SKIN_TONE_MEDIUM_DARK,
-  SKIN_TONE_NEUTRAL,
-} from "emoji-picker-react";
+import Picker, { SKIN_TONE_NEUTRAL } from "emoji-picker-react";
 
 const initialFormValues = () => {
   return {
@@ -16,6 +12,7 @@ const initialFormValues = () => {
     description: "",
     githubUrl: "",
     deployedUrl: "",
+    emojis: "",
   };
 };
 
@@ -64,7 +61,8 @@ export const Project = () => {
     e.preventDefault();
     try {
       setRequestStatus("loading");
-      await createProject(values);
+      const emojis = chosenEmojis?.[0] + chosenEmojis?.[1];
+      await createProject({ ...values, emojis });
     } catch (error) {
       alert(error.response.data.message ?? error);
     } finally {
@@ -123,7 +121,7 @@ export const Project = () => {
             />
           </div>
 
-          <div className="mb-0">
+          <div className="mb-6">
             <label
               for="description"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
@@ -181,8 +179,8 @@ export const Project = () => {
         </div>
 
         <div className="col-span-2 col-start-3">
-          <div className="mb-0">
-            <p className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+          <div className="mb-6">
+            <p className="text-sm font-medium text-gray-900 dark:text-gray-300">
               Pick 2 emojis describing your project
             </p>
             <div className="flex flex-row my-4 gap-2">
