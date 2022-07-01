@@ -53,7 +53,7 @@ export const Projects = () => {
           projects.map((project) => (
             <Link to={`/project/${project._id}`} state={project}>
               <div className="flex flex-col gap-y-1 cursor-pointer border bg-white rounded-md p-6 transform transition-transform ease-in-out duration-100 hover:border-gray-300 hover:-translate-y-1 focus:-translate-y-1">
-                <div>{project.emojis}</div>
+                <div>{project.emojis.split("-").join("")}</div>
                 <div className="font-semibold text-gray-800">
                   {project.title}
                 </div>

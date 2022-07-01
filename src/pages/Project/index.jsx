@@ -1,5 +1,5 @@
 import { Textarea } from "flowbite-react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Header } from "../../components/Header";
 import { LayoutContainer } from "../../components/LayoutContainer";
@@ -41,7 +41,7 @@ export const ProjectDetails = ({ project }) => {
     <LayoutContainer>
       <div className="flex flex-col gap-2">
         <h5 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
-          {project.emojis}
+          {project.emojis.split("-").join("")}
           {" → "}
           {project.title}
         </h5>
@@ -89,6 +89,13 @@ export const ProjectDetails = ({ project }) => {
 export const CreateOrEditProject = ({ project }) => {
   const DESCRIPTION_MAX_LENGTH = 150;
 
+  useEffect(() => {
+    if (!project) return;
+    setDescriptionCharsLeft(
+      DESCRIPTION_MAX_LENGTH - project.description.length
+    );
+  }, [project]);
+
   const [values, setValues] = useState(
     project
       ? {
@@ -96,12 +103,14 @@ export const CreateOrEditProject = ({ project }) => {
           description: project.description,
           githubUrl: project.githubUrl,
           deployedUrl: project.deployedUrl,
-          emojis: project.emojis,
         }
       : initialFormValues
   );
   const [requestStatus, setRequestStatus] = useState("success");
-  const [chosenEmojis, setChosenEmojis] = useState([]);
+  const [chosenEmojis, setChosenEmojis] = useState(
+    project ? project.emojis.split("-") : []
+  );
+
   const [descriptionCharsLeft, setDescriptionCharsLeft] = useState(
     DESCRIPTION_MAX_LENGTH
   );
@@ -132,8 +141,18 @@ export const CreateOrEditProject = ({ project }) => {
   const createProject = async (body) => {
     try {
       const response = await api.post("/api/project", body);
-      const { title } = response.data;
-      alert(title, " project has been successfully created!");
+      alert("project has been successfully created!");
+      viewAllProjects();
+    } catch (error) {
+      const err = error;
+      throw err;
+    }
+  };
+
+  const updateProject = async (body) => {
+    try {
+      const response = await api.put(`/api/project/${project._id}`, body);
+      alert("project has been successfully updated!");
       viewAllProjects();
     } catch (error) {
       const err = error;
@@ -145,11 +164,22 @@ export const CreateOrEditProject = ({ project }) => {
     e.preventDefault();
     try {
       setRequestStatus("loading");
-      const emojis = chosenEmojis?.[0] + chosenEmojis?.[1];
-      await createProject({
-        ...values,
-        emojis,
-      });
+      const emojis = chosenEmojis?.[0] + "-" + chosenEmojis?.[1];
+      if (!(chosenEmojis?.[0] && chosenEmojis?.[1])) {
+        alert("All input is required!");
+        return;
+      }
+      if (project) {
+        await updateProject({
+          ...values,
+          emojis,
+        });
+      } else {
+        await createProject({
+          ...values,
+          emojis,
+        });
+      }
     } catch (error) {
       alert(error.response.data.message ?? error);
     } finally {
