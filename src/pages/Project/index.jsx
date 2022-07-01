@@ -1,6 +1,6 @@
 import { Textarea } from "flowbite-react";
 import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Header } from "../../components/Header";
 import { LayoutContainer } from "../../components/LayoutContainer";
 import { api } from "../../services/api";
@@ -23,7 +23,6 @@ export const Project = () => {
   const { slug } = useParams();
   const { state: project } = useLocation();
   const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   return (
     <>
@@ -53,22 +52,25 @@ export const ProjectDetails = ({ project }) => {
       </div>
       <p className="text-xl">{project.description}</p>
       <div className="flex flex-row gap-4">
-        <button
-          type="button"
-          onClick={() => {}}
-          className="max-w-fit border border-gray-300 text-gray-800 hover:bg-gray-50  font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
-        >
-          <GoMarkGithub className="mr-2 w-6 h-6" />
-          View on GitHub
-        </button>
-        <button
-          type="button"
-          onClick={() => {}}
-          className="max-w-fit border border-gray-300 text-gray-800 hover:bg-gray-50  font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
-        >
-          <TbExternalLink className="mr-2 w-6 h-6" />
-          Visit Website
-        </button>
+        <a target="_blank" rel="noreferrer" href={project.githubUrl}>
+          <button
+            type="button"
+            className="max-w-fit border border-gray-300 text-gray-800 hover:bg-gray-50  font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
+          >
+            <GoMarkGithub className="mr-2 w-6 h-6" />
+            View on GitHub
+          </button>
+        </a>
+        <a target="_blank" rel="noreferrer" href={project.deployedUrl}>
+          <button
+            type="button"
+            onClick={() => {}}
+            className="max-w-fit border border-gray-300 text-gray-800 hover:bg-gray-50  font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
+          >
+            <TbExternalLink className="mr-2 w-6 h-6" />
+            Visit Website
+          </button>
+        </a>
       </div>
       <iframe
         style={{
