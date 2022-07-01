@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { uniqueNamesGenerator } from "unique-names-generator";
 import { nouns } from "../../utils/nouns";
-import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 
 const initialFormValues = () => {
@@ -77,7 +76,7 @@ export const Register = () => {
         <div class="mb-6">
           <label
             for="firstname"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            class="block mb-2 text-sm font-medium text-gray-900 "
           >
             Firstname
           </label>
@@ -85,7 +84,7 @@ export const Register = () => {
             value={values.firstname}
             type="text"
             name="firstname"
-            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 "
             id="firstname"
             placeholder="Samat"
             disabled={requestStatus === "loading"}
@@ -106,7 +105,7 @@ export const Register = () => {
             name="lastname"
             id="lastname"
             placeholder="Legendov"
-            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 "
             disabled={requestStatus === "loading"}
             onChange={handleChange}
           />
@@ -124,7 +123,7 @@ export const Register = () => {
             type="text"
             name="nickname"
             placeholder="sake-the-legend"
-            class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 "
             id="nickname"
             disabled
             onChange={handleChange}
@@ -151,7 +150,7 @@ export const Register = () => {
             name="password"
             id="password"
             placeholder="•••••••"
-            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 "
             disabled={requestStatus === "loading"}
             onChange={handleChange}
           />
@@ -187,7 +186,7 @@ export const Register = () => {
         <button
           type="submit"
           disabled={requestStatus === "loading"}
-          class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          class="w-full text-white bg-blue-700 hover:bg-blue-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
         >
           {requestStatus === "loading" && (
             <>
@@ -220,7 +219,7 @@ export const Register = () => {
         <Link to="/login">
           <button
             type="button"
-            class="w-full py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+            class="w-full py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100"
           >
             Login
           </button>

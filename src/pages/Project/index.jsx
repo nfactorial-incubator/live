@@ -191,7 +191,11 @@ export const CreateOrEditProject = ({ project }) => {
     <LayoutContainer>
       <Header
         title={project ? "Edit Project" : "Create Project"}
-        subtitle={"Submit your amazing project, so others can get inspired!"}
+        subtitle={
+          project
+            ? "Looks like you want to make your project even prettier!"
+            : "Submit your amazing project, so others can get inspired!"
+        }
       />
       <button
         type="button"
@@ -349,7 +353,11 @@ export const CreateOrEditProject = ({ project }) => {
               </svg>
             </>
           )}
-          {requestStatus === "loading" ? "Loading..." : "Submit"}
+          {requestStatus === "loading"
+            ? "Loading..."
+            : project
+            ? "Save"
+            : "Submit"}
         </button>
       </form>
     </LayoutContainer>
